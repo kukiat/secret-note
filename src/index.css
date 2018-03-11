@@ -5,28 +5,45 @@ body {
   background: rgb(22, 22, 22);
   color: papayawhip;
 }
+.main-dashboard{
+  color: #FFFFFF;
+}
 .head-title{
   font-size: 50px;
   text-align: center;
 }
 .main-note{
+  
+  margin-top: 25px;
   height: 550px;
   display: grid;
   grid-template-columns: repeat(20,5%);
 }
-.text-note{
-  /* margin: 20px 20px 20px 20px; */
+.btn-main{
+  grid-column: 2/3; 
+}
+.btn-click{
+  border: 1px solid #FFFFFF;
+  text-align: center;
+  border-radius: 10px;
+  background: rgb(22, 22, 22);
+  height: 18px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 250;
+  width:60px;
+}
+.btn-click:hover {
+  background: rgb(71, 70, 70);
+}
+.cm-s-text-note.CodeMirror { 
+  /* font: 1rem "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif; */
   font-size: 16px;
-  border-radius: 40px;
-  color: #FFFFFF;
   height: 500px;
 }
-/* .cm-s-duotone-dark.CodeMirror { 
-  background: papayawhip;
-  color: #6c6783; 
-} */
 .body-note{
-  grid-column: 5/18;
+  grid-column: 5/20;
   border-radius: 0px 10px 10px 0px;
   border: 3px solid #FFFFFF;
   padding: 15px;
@@ -39,13 +56,15 @@ body {
   text-align: center;
   overflow-x: scroll;
   grid-column: 3/5;
-  border-radius: 5px 0px 0px 5px;
-  border: 3px solid #FFFFFF;
+  border-radius: 10px 0px 0px 10px;
+  border-left: 3px solid #FFFFFF;
+  border-top: 3px solid #FFFFFF;
+  border-bottom: 3px solid #FFFFFF;
   /* display: grid; */
   overflow-y: scroll;
 }
 .title-note{
-  background: rgb(55, 55, 55);
+  /* background: rgb(55, 55, 55); */
   height: 50px;
   border-bottom: 3px solid #FFFFFF; 
   cursor: pointer;
@@ -54,5 +73,5 @@ body {
   background: #293237;
   padding: 20px;
   border-radius: 5px;
-  border: solid 1px #FFFFFF;
+  box-shadow: rgba(0, 0, 0, 0.55) 10px 20px 68px;
 }

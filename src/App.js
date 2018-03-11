@@ -36,7 +36,8 @@ class App extends Component {
   }
 
   addTitle = ()=> {
-    this.state.titles.push({name:'Title222', content:'wdwdasdwawdasdwas'})
+    const randomString = Math.random().toString()
+    this.state.titles.push({name:'Title222', content: randomString})
     this.setState({ titles:this.state.titles })
   }
 
@@ -49,10 +50,8 @@ class App extends Component {
             <DashBoard 
               titles={ this.state.titles }
               addTitle={ this.addTitle }
+              logout = { this.logout }
             />
-            
-            <button onClick={ this.profile }>Profile</button>
-            <button onClick={ this.logout }>logout</button>
           </div>
           : 
           <div>

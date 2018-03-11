@@ -1,11 +1,4 @@
 import React from 'react'
-// import CodeMirror from 'codemirror'
-// import 'codemirror/lib/codemirror.css'
-// import 'codemirror/theme/material.css'
-// import 'codemirror/theme/neat.css'
-// import 'codemirror/mode/xml/xml.js'
-// import 'codemirror/mode/javascript/javascript.js'
-
 import {Controlled as CodeMirror} from 'react-codemirror2';
 
 require('codemirror/lib/codemirror.css');
@@ -14,56 +7,48 @@ require('codemirror/theme/neat.css');
 require('codemirror/mode/xml/xml.js');
 require('codemirror/mode/javascript/javascript.js');
 
-export default class DashBoard extends React.Component {
+class DashBoard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: 'kukiat wangtaphandwdasdwasdwawdwaadw\nNajadawdasdwadwwdawdadawddw'
+      value: this.props.titles[0].content
     }
   }
+
+  onContentChange = (index) => {
+    const { value } =this.state
+    const titleContent = this.props.titles[index].content
+    this.setState({
+      value : titleContent
+    })
+  }
+
   render() {
+    const { addTitle, titles } = this.props
     const options = {
-      theme: 'material',
+      theme: 'material text-note',
     }
     console.log(this.state.value)
     return (
-      <div>
-        <button onClick={ () => this.props.addTitle() }>addTitle</button>
+      <div className="main-dashboard">
         <div className="head-title" >Note everything that secret</div>
         <div className="main-note">
+          <div className="btn-main">
+            <div className= "btn-click" onClick={ () => addTitle() }>ADD</div>
+            <div className= "btn-click" onClick={ () => addTitle() }>SAVE</div>
+            <div className= "btn-click" onClick={ () => this.props.logout() }>SignOut</div>
+          </div>
           <div className="all-title">
             {
-              this.props.titles.map((title, i) => (
-                <div key={i} className="title-note">{title.name}</div>
+              titles.map((title, index) => (
+                <div key={index} className="title-note" onClick={ ()=>this.onContentChange(index)} >{title.name}</div>
               ))
             }
-            {/* <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div>
-            <div className="title-note">Title</div> */}
           </div>
           <div className="body-note">
             <div className="bg-text-note">
               <div className="wrap-text-note">
                 <CodeMirror
-                  className="text-note"
                   value={this.state.value}
                   options={options}
                   onBeforeChange={(editor, data, value) => {
@@ -81,3 +66,5 @@ export default class DashBoard extends React.Component {
     )
   }
 }
+
+export default DashBoard
