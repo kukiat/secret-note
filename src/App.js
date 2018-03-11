@@ -9,7 +9,8 @@ class App extends Component {
     }
     this.state = {
       currentUser,
-      currentStatus: null
+      currentStatus: null,
+      titles: [{name:'Title', content: 'eieieiieieie'},]
     }
   }
 
@@ -34,13 +35,21 @@ class App extends Component {
     window.FB.logout(this.checkCurrentStatus)
   }
 
+  addTitle = ()=> {
+    this.state.titles.push({name:'Title222', content:'wdwdasdwawdasdwas'})
+    this.setState({ titles:this.state.titles })
+  }
+
   render() {
     return (
       <div className="App">
         {
           this.state.currentStatus ?
           <div>
-            <DashBoard/>
+            <DashBoard 
+              titles={ this.state.titles }
+              addTitle={ this.addTitle }
+            />
             
             <button onClick={ this.profile }>Profile</button>
             <button onClick={ this.logout }>logout</button>

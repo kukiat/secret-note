@@ -28,10 +28,15 @@ export default class DashBoard extends React.Component {
     console.log(this.state.value)
     return (
       <div>
+        <button onClick={ () => this.props.addTitle() }>addTitle</button>
         <div className="head-title" >Note everything that secret</div>
         <div className="main-note">
           <div className="all-title">
-            <div className="title-note">Title</div>
+            {
+              this.props.titles.map((title, i) => (
+                <div key={i} className="title-note">{title.name}</div>
+              ))
+            }
             {/* <div className="title-note">Title</div>
             <div className="title-note">Title</div>
             <div className="title-note">Title</div>

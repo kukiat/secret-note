@@ -48,6 +48,7 @@ body {
   background: rgb(55, 55, 55);
   height: 50px;
   border-bottom: 3px solid #FFFFFF; 
+  cursor: pointer;
 }
 .wrap-text-note{
   background: #293237;
