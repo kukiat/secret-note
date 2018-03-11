@@ -24,13 +24,36 @@ export default class DashBoard extends React.Component {
   render() {
     const options = {
       theme: 'material',
-      maxHighlightLength: 10
     }
     console.log(this.state.value)
     return (
       <div>
+        <div className="head-title" >Note everything that secret</div>
         <div className="main-note">
-          <div className="title-note">TitleTitle</div>
+          <div className="all-title">
+            <div className="title-note">Title</div>
+            {/* <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div>
+            <div className="title-note">Title</div> */}
+          </div>
           <div className="body-note">
             <div className="bg-text-note">
               <div className="wrap-text-note">

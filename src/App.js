@@ -33,10 +33,10 @@ class App extends Component {
   logout = () => {
     window.FB.logout(this.checkCurrentStatus)
   }
+
   render() {
     return (
       <div className="App">
-        <div className="head-title" >Secret Note</div>
         {
           this.state.currentStatus ?
           <div>
@@ -45,7 +45,11 @@ class App extends Component {
             <button onClick={ this.profile }>Profile</button>
             <button onClick={ this.logout }>logout</button>
           </div>
-          : <button onClick={ this.login }>Login</button>
+          : 
+          <div>
+            <div className="head-title" >Secret Note</div>
+            <button onClick={ this.login }>Login</button>
+          </div>
         }
       </div>
     );

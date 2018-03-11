@@ -7,8 +7,10 @@ body {
 }
 .head-title{
   font-size: 50px;
+  text-align: center;
 }
 .main-note{
+  height: 550px;
   display: grid;
   grid-template-columns: repeat(20,5%);
 }
@@ -17,13 +19,14 @@ body {
   font-size: 16px;
   border-radius: 40px;
   color: #FFFFFF;
+  height: 500px;
 }
 /* .cm-s-duotone-dark.CodeMirror { 
   background: papayawhip;
   color: #6c6783; 
 } */
 .body-note{
-  grid-column: 6/18;
+  grid-column: 5/18;
   border-radius: 0px 10px 10px 0px;
   border: 3px solid #FFFFFF;
   padding: 15px;
@@ -32,13 +35,19 @@ body {
   padding: 25px;
   background: #273E63;
 }
-.title-note{
-  grid-column: 3/6;
-  background: rgb(22, 22, 22);
-  height:40px;
+.all-title{
+  text-align: center;
+  overflow-x: scroll;
+  grid-column: 3/5;
   border-radius: 5px 0px 0px 5px;
   border: 3px solid #FFFFFF;
-  border-right: 3px solid rgb(22, 22, 22);
+  /* display: grid; */
+  overflow-y: scroll;
+}
+.title-note{
+  background: rgb(55, 55, 55);
+  height: 50px;
+  border-bottom: 3px solid #FFFFFF; 
 }
 .wrap-text-note{
   background: #293237;
