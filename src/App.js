@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DashBoard from './DashBoard'
 
 class App extends Component {
   constructor(props) {
@@ -26,21 +27,24 @@ class App extends Component {
   }
 
   login = () => {
-    window.FB.login(this.checkCurrentStatus)
+    window.FB.login(this.checkCurrentStatus, {scope: 'user_photos'})
   }
 
   logout = () => {
     window.FB.logout(this.checkCurrentStatus)
   }
-
   render() {
-    console.log(this.state.currentStatus)
     return (
       <div className="App">
         <div className="head-title" >Secret Note</div>
         {
           this.state.currentStatus ?
-          <button onClick={ this.logout }>logout</button>
+          <div>
+            <DashBoard/>
+            
+            <button onClick={ this.profile }>Profile</button>
+            <button onClick={ this.logout }>logout</button>
+          </div>
           : <button onClick={ this.login }>Login</button>
         }
       </div>
