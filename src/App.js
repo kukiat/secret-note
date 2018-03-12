@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import DashBoard from './DashBoard'
-import firebase from './config'
-const db = firebase.database()
 
 class App extends Component {
   constructor(props) {
@@ -37,7 +35,7 @@ class App extends Component {
   }
 
   render() {
-    const { userId, currentStatus,titles } = this.state
+    const { userId, currentStatus } = this.state
     return (
       <div className="App">
         {
@@ -45,6 +43,7 @@ class App extends Component {
           <div>
             <DashBoard 
               userId = { userId }
+              // userId = '{ userId }'
               logout = { this.logout }
             />
           </div>

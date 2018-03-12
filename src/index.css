@@ -20,33 +20,6 @@ body {
   display: grid;
   grid-template-columns: repeat(20,5%);
 }
-.btn-main{
-  grid-column: 2/3; 
-}
-.btn-click{
-  text-align: center;
-  border-radius: 10px;
-  background: rgb(22, 22, 22);
-  height: 24px;
-  padding-top:5px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 250;
-  width:60px;
-}
-.btn-add{
-  border: 1px solid rgb(107, 207, 82);
-  color: rgb(107, 207, 82);
-}
-.btn-save{
-  border: 1px solid rgb(65, 83, 180);
-  color: rgb(65, 83, 180);
-}
-.btn-signout{
-  border: 1px solid rgb(212, 135, 212);
-  color: rgb(212, 135, 212);
-}
 .btn-click:hover {
   background: rgb(37, 37, 37);
 }
@@ -68,6 +41,12 @@ body {
   padding: 25px;
   background: #273E63;
 }
+.btn-main{
+  grid-column: 2/3; 
+  display: grid;
+  grid-template-rows: repeat(20,5%);
+  grid-gap: 20px;
+}
 .all-title{
   text-align: center;
   overflow-x: scroll;
@@ -76,15 +55,7 @@ body {
   border-left: 2px solid #FFFFFF;
   border-top: 2px solid #FFFFFF;
   border-bottom: 2px solid #FFFFFF;
-  /* display: grid; */
   overflow-y: scroll;
-}
-.title-note{
-  /* background: rgb(55, 55, 55); */
-  height: 35px;
-  padding-top:15px;
-  border-bottom: 2px solid #FFFFFF; 
-  cursor: pointer;
 }
 .wrap-text-note{
   background: #293237;

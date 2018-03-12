@@ -1,6 +1,8 @@
 import React from 'react'
 import {Controlled as CodeMirror} from 'react-codemirror2';
 import firebase from './config'
+import styled from 'styled-components'
+import Note from './components/Note'
 const db = firebase.database()
 
 require('codemirror/lib/codemirror.css');
@@ -15,89 +17,88 @@ class DashBoard extends React.Component {
     this.state = {
       value: '',
       titles: [],
-      prepareId: null,
+      tabId: null,
+      check :false
     }
   }
-
   async componentDidMount() {
     const ref = await db.ref('note').once('value')
     const notes = ref.val()
-    const userNote = []
+    const newNotes = []
     Object.keys(notes).map((key) => {
       if(this.props.userId === notes[key].userId) {
-        userNote.push(Object.assign(notes[key], { id: key }))
+        newNotes.push(Object.assign(notes[key], { id: key }))
       }
     })
-    if(userNote.length === 0){
-      userNote.push({id:'1111', title:'NewTitle', content:''})
-    }
-
     this.setState({ 
-      titles: userNote,
-      value: userNote[0].content,
-      prepareId: userNote[0].id,
+      titles: newNotes.reverse(),
+      value: newNotes[0].content,
+      tabId: newNotes[0].id,
     })
   }
-
   async componentDidUpdate(prevProps, prevState) {
-    
-    if(prevState.value !== '') {
-      await db.ref('note').child(this.state.prepareId).update({
-        content:  this.state.value
+    console.log(prevState.value)
+    console.log( this.state.value)
+    console.log( this.state.check)
+    if(prevState.value !== '' && this.state.value !== '') {
+      await db.ref('note').child(this.state.tabId).update({
+        content: this.state.value
       })
+      console.log('saved')
     }
+    console.log('componentDidUpdate')
   }
 
   onContentChange = (index, id) => {
-    const { value, titles } =this.state
+    const { titles } =this.state
     const titleContent = titles[index].content
     this.setState({ 
       value : titleContent,
-      prepareId: id
+      tabId: id
     })
   }
 
-  addTitle = ()=> {
-    this.state.titles.push({id: Math.random().toString(), title: 'newTitle', content: `xxxx`, userId:'1150'})
-    this.setState({ titles:this.state.titles })
+  addTitle = async () => {
+    const newNote = {title: 'newTitle', userId: this.props.userId, content: ''}
+    const ref = await db.ref('note').push(newNote)
+    this.state.titles.unshift(Object.assign(newNote, { id: ref.key}))
+    this.setState({
+      titles: this.state.titles,
+      value: ''
+    })
   }
-
-  save = async () => {
-    const { userId} = this.props
-    // const ref = await db.ref('note').push({
-    //   userId, 
-    //   content: this.state.value,
-    //   title: 'title'
-    // })
-  }
-
+  
   render() {
-    const { addTitle } = this.props
+    const { logout, userId, tabId } = this.props
     const { titles } = this.state
     const options = {
       theme: 'material text-note',
     }
-    
     return (
       <div className="main-dashboard">
-        <div className="head-title" >Note everything that secret</div>
+        <div className="head-title" >{userId}</div>
         <div className="main-note">
           <div className="btn-main">
-            <div className= "btn-click btn-add" onClick={ () => this.addTitle() }>ADD</div>
-            <div className= "btn-click btn-save" onClick={ () => this.save() }>SAVE</div>
-            <div className= "btn-click btn-signout" onClick={ () => this.props.logout() }>SignOut</div>
+            <Button color="rgb(107, 207, 82)" onClick={ () => this.addTitle() }>ADD</Button>
+            <Button color="rgb(65, 83, 180)" onClick={ () => logout()} >SignOut</Button>
           </div>
           <div className="all-title">
             {
               titles.map((note, index) => (
-                <div key={note.id} className="title-note" onClick={ ()=>this.onContentChange(index, note.id)} >{note.title}</div>
+                <Tab 
+                  key={note.id} 
+                  onClick={() => this.onContentChange(index, note.id)} 
+                >
+                  {note.title}
+                </Tab>
               ))
             }
+            {/* <Note/> */}
           </div>
           <div className="body-note">
             <div className="bg-text-note">
               <div className="wrap-text-note">
-                <CodeMirror
+              <CodeMirror
                   value={this.state.value}
                   options={options}
                   onBeforeChange={(editor, data, value) => {
@@ -115,5 +116,25 @@ class DashBoard extends React.Component {
     )
   }
 }
+
+const Button = styled.a`
+  font-size: 14px;
+  font-weight: 250;
+  width:60px;
+  height: 24px;
+  text-align: center;
+  color: ${props => props.color};
+  border: 1px solid ${props => props.color};
+  border-radius: 10px;
+  padding-top:5px;
+  margin-bottom: 20px;
+  cursor: pointer;
+`
+const Tab = styled.div`
+  height: 35px;
+  padding-top:15px;
+  border-bottom: 2px solid #FFFFFF; 
+  cursor: pointer;
+`
 
 export default DashBoard
