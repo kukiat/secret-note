@@ -7,12 +7,10 @@ export default class Header extends React.Component {
 
   async componentDidMount() {
     await window.FB.api('/me', (profile) => {
-      this.setState({
-        profile: profile
-      })
+      this.setState({ profile: profile })
     })
   }
-  
+
   render() {
     const { name='' } = this.state.profile
     return (
