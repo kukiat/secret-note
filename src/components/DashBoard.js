@@ -2,6 +2,7 @@ import React from 'react'
 import {Controlled as CodeMirror} from 'react-codemirror2';
 import firebase from '../config'
 import styled from 'styled-components'
+import Header from './Header'
 const db = firebase.database()
 
 require('codemirror/lib/codemirror.css');
@@ -20,6 +21,7 @@ class DashBoard extends React.Component {
       check :false
     }
   }
+
   async componentDidMount() {
     const ref = await db.ref('note').once('value')
     const notes = ref.val()
@@ -35,17 +37,14 @@ class DashBoard extends React.Component {
       tabId: newNotes[0].id,
     })
   }
+
   async componentDidUpdate(prevProps, prevState) {
-    console.log(prevState.value)
-    console.log( this.state.value)
-    console.log( this.state.check)
     if(prevState.value !== '' && this.state.value !== '') {
       await db.ref('note').child(this.state.tabId).update({
         content: this.state.value
       })
       console.log('saved')
     }
-    console.log('componentDidUpdate')
   }
 
   onContentChange = (index, id) => {
@@ -70,34 +69,25 @@ class DashBoard extends React.Component {
   render() {
     const { logout, userId, tabId } = this.props
     const { titles } = this.state
-    const options = {
-      theme: 'material text-note',
-    }
+    const options = { theme: 'material text-note' }
     return (
       <div className="main-dashboard">
-        <div className="head-title" >{userId}</div>
+        <Header FbResponse ={ this.props.FbResponse }/>
         <div className="main-note">
           <div className="btn-main">
             <Button color="rgb(107, 207, 82)" onClick={ () => this.addTitle() }>ADD</Button>
             <Button color="rgb(65, 83, 180)" onClick={ () => logout()} >SignOut</Button>
           </div>
           <div className="all-title">
-            {
-              titles.map((note, index) => (
-                <Tab 
-                  key={note.id} 
-                  onClick={() => this.onContentChange(index, note.id)} 
-                >
-                  {note.title}
-                </Tab>
+            {titles.map((note, index) => (
+                <Tab key={note.id} onClick={() => this.onContentChange(index, note.id)}>{note.title}</Tab>
               ))
             }
-            
           </div>
           <div className="body-note">
             <div className="bg-text-note">
               <div className="wrap-text-note">
-              <CodeMirror
+                <CodeMirror
                   value={this.state.value}
                   options={options}
                   onBeforeChange={(editor, data, value) => {

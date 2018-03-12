@@ -4,7 +4,7 @@ import styled from 'styled-components'
 class Home extends React.Component{
   render() {
     return (
-      <div className="gg">
+      <div className="">
         <div className="head-title" >Secret Note</div>
         <FbButton onClick={ this.props.login }>
           <FbIcon>F</FbIcon> 
@@ -20,6 +20,7 @@ const FbIcon =styled.span`
   font-size:18px;
   font-weight: 900;
 `
+
 const FbButton = styled.div`
   width: 350px;
   height: 30px;

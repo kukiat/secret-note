@@ -6,6 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props) 
     this.state = {
+      FbResponse: null,
       userId: null,
       currentStatus: null
     }
@@ -19,11 +20,12 @@ class App extends Component {
   checkCurrentStatus = (res) => {
     if(res.status === 'connected') {
       this.setState({ 
+        FbResponse: res,
         currentStatus: true,
         userId: res.authResponse.userID
       })
     }else {
-      this.setState({ currentStatus: false, userId: null })
+      this.setState({ currentStatus: false, userId: null, FbResponse: null })
     }
   }
 
@@ -36,7 +38,7 @@ class App extends Component {
   }
 
   render() {
-    const { userId, currentStatus } = this.state
+    const { userId, currentStatus, FbResponse } = this.state
     return (
       <div className="App">
         {
@@ -44,6 +46,7 @@ class App extends Component {
           <div>
             <DashBoard 
               userId = { userId }
+              FbResponse = { FbResponse }
               // userId = '{ userId }'
               logout = { this.logout }
             />
