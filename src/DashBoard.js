@@ -30,11 +30,12 @@ class DashBoard extends React.Component {
     })
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
+    
     if(prevState.value !== '') {
-      console.log('prepareId',this.state.prepareId)
-      console.log('prevState',prevState.value)
-      console.log('value', this.state.value)
+      await db.ref('note').child(this.state.prepareId).update({
+        content:  this.state.value
+      })
     }
   }
 
