@@ -18,7 +18,7 @@ class DashBoard extends React.Component {
       value: '',
       titles: [],
       tabId: null,
-      check :false
+      indexTitle: 0
     }
   }
 
@@ -39,11 +39,13 @@ class DashBoard extends React.Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    if(prevState.value !== '' && this.state.value !== '') {
-      await db.ref('note').child(this.state.tabId).update({
+    const checkTab = this.state.titles[this.state.indexTitle].content === this.state.value
+    if(prevState.value !== '' && this.state.value !== '' && !checkTab) {
+      const key = await db.ref('note').child(this.state.tabId).update({
         content: this.state.value
       })
-      console.log('saved')
+      Object.assign(this.state.titles[this.state.indexTitle], {content: this.state.value})
+      this.setState({ titles: this.state.titles })
     }
   }
 
@@ -52,7 +54,8 @@ class DashBoard extends React.Component {
     const titleContent = titles[index].content
     this.setState({ 
       value : titleContent,
-      tabId: id
+      tabId: id,
+      indexTitle: index
     })
   }
 
