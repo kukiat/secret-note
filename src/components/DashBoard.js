@@ -31,6 +31,13 @@ class DashBoard extends React.Component {
         newNotes.push(Object.assign(notes[key], { id: key }))
       }
     })
+    //new user
+    if(newNotes.length === 0) {
+      const noteNewUser = {userId: this.props.userId, content: 'Note something here!!', title:'New Title'}
+      const val = db.ref('note').push(noteNewUser)
+      Object.assign(noteNewUser, {id: val.key})
+      newNotes.push(noteNewUser)
+    }
     this.setState({ 
       titles: newNotes.reverse(),
       value: newNotes[0].content,
@@ -41,7 +48,7 @@ class DashBoard extends React.Component {
   async componentDidUpdate(prevProps, prevState) {
     const checkTab = this.state.titles[this.state.indexTitle].content === this.state.value
     if(prevState.value !== '' && this.state.value !== '' && !checkTab) {
-      const key = await db.ref('note').child(this.state.tabId).update({
+      await db.ref('note').child(this.state.tabId).update({
         content: this.state.value
       })
       Object.assign(this.state.titles[this.state.indexTitle], {content: this.state.value})
