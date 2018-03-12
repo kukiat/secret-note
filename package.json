@@ -2,7 +2,7 @@
   "name": "secret-note",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kukiat.github.io/note-secret",
+  "homepage": "http://kukiat.github.io/note-secret",
   "dependencies": {
     "codemirror": "^5.35.0",
     "firebase": "^4.11.0",
