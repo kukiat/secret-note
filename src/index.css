@@ -6,12 +6,16 @@ body {
   /* -webkit-font-smoothing: antialiased; */
   color: papayawhip;
 }
+.gg{
+  
+}
 .main-dashboard{
   color: #FFFFFF;
 }
 .head-title{
   font-size: 50px;
   text-align: center;
+  margin-bottom: 30px; 
 }
 .main-note{
   font-weight: 400px;

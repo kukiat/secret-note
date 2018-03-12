@@ -1,8 +1,7 @@
 import React from 'react'
 import {Controlled as CodeMirror} from 'react-codemirror2';
-import firebase from './config'
+import firebase from '../config'
 import styled from 'styled-components'
-import Note from './components/Note'
 const db = firebase.database()
 
 require('codemirror/lib/codemirror.css');
@@ -93,7 +92,7 @@ class DashBoard extends React.Component {
                 </Tab>
               ))
             }
-            {/* <Note/> */}
+            
           </div>
           <div className="body-note">
             <div className="bg-text-note">
@@ -130,6 +129,7 @@ const Button = styled.a`
   margin-bottom: 20px;
   cursor: pointer;
 `
+
 const Tab = styled.div`
   height: 35px;
   padding-top:15px;

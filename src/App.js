@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import DashBoard from './DashBoard'
+import DashBoard from './components/DashBoard'
+import Home from './components/Home'
 
 class App extends Component {
   constructor(props) {
@@ -48,10 +49,7 @@ class App extends Component {
             />
           </div>
           : 
-          <div>
-            <div className="head-title" >Secret Note</div>
-            <button onClick={ this.login }>Login</button>
-          </div>
+          <Home login={ this.login }/>
         }
       </div>
     );
