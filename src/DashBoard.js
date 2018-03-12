@@ -22,7 +22,11 @@ class DashBoard extends React.Component {
   async componentDidMount() {
     const ref = await db.ref('note').once('value')
     const notes = ref.val()
-    const allNotes = Object.keys(notes).map((key) => Object.assign(notes[key], { id: key }))
+    const allNotes = Object.keys(notes).map((key) => {
+      if(this.props.userId === notes[key].userId) {
+        Object.assign(notes[key], { id: key })
+      }
+    })
     this.setState({ 
       titles: allNotes,
       value: allNotes[0].content,
