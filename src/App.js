@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import DashBoard from './DashBoard'
+import firebase from './config'
+const db = firebase.database()
 
 class App extends Component {
   constructor(props) {
     super(props) 
-    const currentUser = {
-      name: ''
-    }
     this.state = {
-      currentUser,
-      currentStatus: null,
-      titles: [{name:'Title', content: 'eieieiieieie'},]
+      userId: null,
+      currentStatus: null
     }
   }
 
@@ -21,35 +19,32 @@ class App extends Component {
 
   checkCurrentStatus = (res) => {
     if(res.status === 'connected') {
-      this.setState({ currentStatus: true })
+      this.setState({ 
+        currentStatus: true,
+        userId: res.authResponse.userID
+      })
     }else {
-      this.setState({ currentStatus: false })
+      this.setState({ currentStatus: false, userId: null })
     }
   }
 
   login = () => {
-    window.FB.login(this.checkCurrentStatus, {scope: 'user_photos'})
+    window.FB.login(this.checkCurrentStatus)
   }
 
   logout = () => {
     window.FB.logout(this.checkCurrentStatus)
   }
 
-  addTitle = ()=> {
-    const randomString = Math.random().toString()
-    this.state.titles.push({name:'Title222', content: randomString})
-    this.setState({ titles:this.state.titles })
-  }
-
   render() {
+    const { userId, currentStatus,titles } = this.state
     return (
       <div className="App">
         {
-          this.state.currentStatus ?
+          currentStatus ?
           <div>
             <DashBoard 
-              titles={ this.state.titles }
-              addTitle={ this.addTitle }
+              userId = { userId }
               logout = { this.logout }
             />
           </div>
