@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Modal, RemoveModalBody }  from './Modal'
+import { Modal, RemoveModalBody, Btn }  from './Modal'
 import Topic from './Topic'
 import Note from './Note'
 import firebase from '../config'
@@ -169,20 +169,7 @@ class DashBoard extends React.Component {
 }
 
 const Button = styled.a`
-  font-size: 14px;
-  font-weight: 250;
-  width:60px;
-  height: 24px;
-  text-align: center;
-  color: ${props => props.color};
-  border: 1px solid ${props => props.color};
-  border-radius: 10px;
-  padding-top:5px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  &:hover{
-    background: #202020;
-  }
+  ${props => Btn(props)}
 `
 
 export default DashBoard

@@ -9,11 +9,6 @@ body {
 .main-dashboard{
   color: #FFFFFF;
 }
-.head-title{
-  font-size: 50px;
-  text-align: center;
-  margin-bottom: 30px; 
-}
 .main-note{
   font-weight: 400px;
   margin-top: 25px;
@@ -48,15 +43,8 @@ body {
   grid-template-rows: repeat(20,5%);
   grid-gap: 20px;
 }
-.all-title{
-  text-align: center;
-  overflow-x: scroll;
-  grid-column: 3/5;
-  border-radius: 10px 0px 0px 10px;
-  border-left: 2px solid #FFFFFF;
-  border-top: 2px solid #FFFFFF;
-  border-bottom: 2px solid #FFFFFF;
-  overflow-y: scroll;
+.home{
+
 }
 .wrap-text-note{
   background: #293237;

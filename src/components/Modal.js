@@ -25,6 +25,25 @@ export const RemoveModalBody = (props) => {
   )
 }
 
+export const Btn = (props) => {
+  return `
+    font-size: 14px;
+    font-weight: 250;
+    width:60px;
+    height: 24px;
+    text-align: center;
+    color: ${props.color};
+    border: 1px solid ${props.color};
+    border-radius: 10px;
+    padding-top:5px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    &:hover{
+      background: #202020;
+    }
+  `
+}
+
 const WrapModal = styled.div`
   display: ${props => props.visible ? 'block' : 'none'};
   position: fixed;
@@ -38,17 +57,11 @@ const WrapModal = styled.div`
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
 `
-const animatationTop = keyframes`
-  from {
-    top:-300px; 
-    opacity:0
-  }
-  to {
-    top:0; 
-    opacity:1
-  }
-`
 
+const animatationTop = keyframes`
+  from { top:-300px; opacity:0}
+  to {top:0; opacity:1}
+`
 
 const ModalRemove  = styled.div`
   background: #121212;
@@ -63,24 +76,8 @@ const ModalRemove  = styled.div`
   animation-duration: 0.4s
 `
 
-const Button = styled.a`
-  font-size: 14px;
-  font-weight: 250;
-  width:60px;
-  height: 24px;
-  text-align: center;
-  color: ${props => props.color};
-  border: 1px solid ${props => props.color};
-  border-radius: 10px;
-  padding-top:5px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  &:hover{
-    background: #202020;
-  }
-`
-
-const ButtonModal = Button.extend`
+const ButtonModal = styled.a`
+  ${ props => Btn(props)}
   grid-column: ${props => props.column};
   width: 100px;
 `

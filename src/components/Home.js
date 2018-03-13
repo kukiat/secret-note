@@ -4,8 +4,8 @@ import styled from 'styled-components'
 class Home extends React.Component{
   render() {
     return (
-      <div className="">
-        <div className="head-title" >Secret Note</div>
+      <div className="home">
+        <Title>Secret Note</Title>
         <FbButton onClick={ this.props.login }>
           <FbIcon>F</FbIcon> 
           <span>Login with Facebook</span>
@@ -14,6 +14,12 @@ class Home extends React.Component{
     )
   }
 }
+
+const Title = styled.div`
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 30px;
+`
 
 const FbIcon =styled.span`
   margin-right :10px;
@@ -33,4 +39,5 @@ const FbButton = styled.div`
   padding-top: 10px;
   text-align:center;
 `
+
 export default Home
