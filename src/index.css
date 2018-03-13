@@ -101,7 +101,7 @@ body {
 }
 .modal-content-detail{
   display: grid;
-  grid-template-rows: 5% 25% 40% 30%;
+  grid-template-rows: 5% 25% 35% 30%;
   height: 100%;
 }
 .modal-title{

@@ -116,7 +116,24 @@ class DashBoard extends React.Component {
   closeModal = () => {
     this.setState({type:'MODAL',visible: false})
   }
-  
+
+  removeTitle = async () => {
+    const { titles} = this.state
+    if(this.state.titles.length > 1) {
+      await db.ref('note').child(this.state.tabId).remove()
+      titles.splice(this.state.indexTitle, 1)
+      this.setState({ 
+        type: '', 
+        titles: titles, 
+        indexTitle: 0, 
+        value: this.state.titles[0].content ,
+        visible: false
+      })
+    }else {
+      console.log('topic must have 1')
+    }
+  }
+
   render() {
     const { logout } = this.props
     const { titles, indexTitle } = this.state
@@ -164,11 +181,16 @@ class DashBoard extends React.Component {
             </div>
           </div>
         </div>
-        <Modal visible={ this.state.visible } closeModal={ this.closeModal }/>
+        <Modal 
+          visible={ this.state.visible } 
+          closeModal={ this.closeModal }
+          removeTitle={ this.removeTitle }
+        />
       </div>
     )
   }
 }
+
 const Modal = (props) => {
   return (
     <div className="modal" style={props.visible ? {'display': 'block'} : {'display' : 'none'}}>
@@ -176,9 +198,9 @@ const Modal = (props) => {
         <div className="modal-content-detail">
           <div className="close" onClick={ props.closeModal }>X</div>
           <div className="modal-title">WARNING !!</div>
-          <div className="modal-header">If you remove. All contents will destroy.</div>
+          <div className="modal-header">If you remove. This note will destroy.</div>
           <div className="modal-btn">
-            <ButtonModal column="2" color="#7CFC00">OK</ButtonModal>
+            <ButtonModal onClick={ props.removeTitle } column="2" color="#7CFC00">OK</ButtonModal>
             <ButtonModal onClick={ props.closeModal } column="4" color="#DC143C">Cancle</ButtonModal>
           </div>
         </div>
