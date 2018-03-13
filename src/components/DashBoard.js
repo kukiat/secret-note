@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import  Modal from './Modal'
+import { Modal }  from './Modal'
 import Topic from './Topic'
 import Note from './Note'
 import firebase from '../config'

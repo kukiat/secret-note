@@ -1,9 +1,9 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
-const Modal = (props) => {
+export const Modal = (props) => {
   return(
-    <div className="modal" style={ props.visible ? {'display': 'block'} : {'display' : 'none'}}>
+    <WrapModal visible={props.visible}>
       <ModalRemove>
         <div className="modal-content-detail">
           <div className="close" onClick={ props.closeModal }>X</div>
@@ -15,10 +15,23 @@ const Modal = (props) => {
           </div>
         </div>
       </ModalRemove>
-    </div>
+    </WrapModal>
   )
 }
 
+const WrapModal = styled.div`
+  display: ${props => props.visible ? 'block' : 'none'};
+  position: fixed;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  padding-top: 150px; 
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+`
 const animatationTop = keyframes`
   from {
     top:-300px; 
@@ -65,5 +78,3 @@ const ButtonModal = Button.extend`
   grid-column: ${props => props.column};
   width: 100px;
 `
-
-export default Modal
