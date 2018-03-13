@@ -46,18 +46,19 @@ class DashBoard extends React.Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    const checkTab = this.state.titles[this.state.indexTitle].content === this.state.value
-    if(prevState.value !== '' && this.state.value !== '' && !checkTab) {
-      await db.ref('note').child(this.state.tabId).update({
-        content: this.state.value
+    const { indexTitle, titles, value, tabId } = this.state
+    const checkTab = titles[indexTitle].content === value
+    if(prevState.value !== '' && value !== '' && !checkTab) {
+      await db.ref('note').child(tabId).update({
+        content: value
       })
-      Object.assign(this.state.titles[this.state.indexTitle], {content: this.state.value})
-      this.setState({ titles: this.state.titles })
+      Object.assign(titles[indexTitle], {content: value})
+      this.setState({ titles: titles })
     }
   }
 
   onContentChange = (index, id) => {
-    const { titles } =this.state
+    const { titles } = this.state
     const titleContent = titles[index].content
     this.setState({ 
       value : titleContent,
@@ -77,8 +78,8 @@ class DashBoard extends React.Component {
   }
   
   render() {
-    const { logout, userId, tabId } = this.props
-    const { titles } = this.state
+    const { logout } = this.props
+    const { titles, indexTitle } = this.state
     const options = { theme: 'material text-note' }
     return (
       <div className="main-dashboard">
@@ -90,8 +91,14 @@ class DashBoard extends React.Component {
           </div>
           <div className="all-title">
             {titles.map((note, index) => (
-                <Tab key={note.id} onClick={() => this.onContentChange(index, note.id)}>{note.title}</Tab>
-              ))
+              <Tab 
+                key={note.id} 
+                onClick={() => this.onContentChange(index, note.id)}
+                selected = {indexTitle === index}
+              >
+                {note.title}
+              </Tab>
+            ))
             }
           </div>
           <div className="body-note">
@@ -102,7 +109,7 @@ class DashBoard extends React.Component {
                   options={options}
                   onBeforeChange={(editor, data, value) => {
                     this.setState({
-                      value,
+                      value
                     })
                   }}
                   onChange={(editor, value) => {}}
@@ -135,6 +142,7 @@ const Tab = styled.div`
   padding-top:15px;
   border-bottom: 2px solid #FFFFFF; 
   cursor: pointer;
+  background: ${props => props.selected ? 'rgb(44,44,44)' : 'rgb(22,22,22)'}
 `
 
 export default DashBoard
