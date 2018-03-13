@@ -18,7 +18,8 @@ class DashBoard extends React.Component {
       value: '',
       titles: [],
       tabId: null,
-      indexTitle: 0
+      indexTitle: 0,
+      type: ''
     }
   }
 
@@ -47,60 +48,56 @@ class DashBoard extends React.Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    const { indexTitle, titles, value, tabId } = this.state
-    let checkTab = false
-    console.log(value, titles, prevState.titles, indexTitle)
-    if(indexTitle !== titles.length)
-      checkTab = titles[indexTitle].content === value
-    else
-      checkTab = true
-    if(!this.isBlank(prevState.value) && !this.isBlank(value) && !checkTab) {
-      await db.ref('note').child(tabId).update({
-        content: value
-      })
+    const { titles, type, tabId, value, indexTitle} = this.state
+    if(type === 'UPDATE' && !this.isBlank(value)) {
+      await db.ref('note').child(tabId).update({ content: value })
       Object.assign(titles[indexTitle], {content: value})
-      console.log('saved')
-      this.setState({ titles: titles })
+      this.setState({ titles: titles, type: '' })
     }
-    if(this.isBlank(prevState.value) && prevState.tabId && tabId !== prevState.tabId) {
+    if(type === 'REMOVE') {
       await db.ref('note').child(prevState.tabId).remove()
       titles.splice(prevState.indexTitle, 1)
-      if(prevState.indexTitle > indexTitle)
-        indexTitle
-      else
-        indexTitle-1
-      console.log('removed')
-      this.setState({ 
-        titles: titles,
-        indexTitle: indexTitle
-      })
+      if(prevState.indexTitle < indexTitle) {
+        this.setState({ type: '', titles: titles, indexTitle: indexTitle -1 })
+      }else{
+        this.setState({ type: '', titles: titles, indexTitle: indexTitle })
+      }
     }
   }
-  //if true==''
+
   isBlank = (text) => {
     return !text || text.length === 0 || /^\s*$/.test(text)
   }
 
   onContentChange = (index, id) => {
-    const { titles } = this.state
-      console.log(titles[index].content)
-      const titleContent = titles[index].content
+    const { titles, value, tabId, indexTitle } = this.state
+    const titleContent = titles[index].content
+    if(this.isBlank(value) && indexTitle !== index) {
+      this.setState({
+        indexTitle: index,
+        value : titleContent,
+        type: 'REMOVE'
+      })
+    }
+    else if(indexTitle !== index) {
       this.setState({ 
         value : titleContent,
         tabId: id,
-        indexTitle: index
+        indexTitle: index,
+        type: 'CHOOSE'
       })
-    
+    }
   }
 
   addTitle = async () => {
-    const newNote = {title: 'newTitle', userId: this.props.userId, content: 'New Note'}
+    const newNote = {title: 'newTitle', userId: this.props.userId, content: 'content = '+ Math.random().toString() }
     const ref = await db.ref('note').push(newNote)
-    this.state.titles.unshift(Object.assign(newNote, { id: ref.key}))
+    this.state.titles.unshift(Object.assign(newNote, { id: ref.key }))
     this.setState({
       titles: this.state.titles,
       value: newNote.content,
-      indexTitle: 0
+      indexTitle: 0,
+      type: 'ADD'
     })
   }
   
@@ -136,7 +133,8 @@ class DashBoard extends React.Component {
                   options={options}
                   onBeforeChange={(editor, data, value) => {
                     this.setState({
-                      value
+                      value,
+                      type: 'UPDATE'
                     })
                   }}
                   onChange={(editor, value) => {}}
