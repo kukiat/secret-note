@@ -9,7 +9,9 @@
     "react": "^16.2.0",
     "react-codemirror2": "^4.1.0",
     "react-dom": "^16.2.0",
+    "react-modal": "^3.3.2",
     "react-scripts": "1.1.1",
+    "rodal": "^1.6.3",
     "styled-components": "^3.2.1"
   },
   "scripts": {

@@ -1,9 +1,10 @@
 import React from 'react'
 import {Controlled as CodeMirror} from 'react-codemirror2';
 import firebase from '../config'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import Header from './Header'
 const db = firebase.database()
+
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/theme/material.css');
@@ -19,7 +20,8 @@ class DashBoard extends React.Component {
       titles: [],
       tabId: null,
       indexTitle: 0,
-      type: ''
+      type: '',
+      visible: false
     }
   }
 
@@ -37,7 +39,7 @@ class DashBoard extends React.Component {
     if(newNotes.length === 0) {
       const noteNewUser = {userId: this.props.userId, content: 'Note something here!!', title:'New Title'}
       const val = db.ref('note').push(noteNewUser)
-      Object.assign(noteNewUser, {id: val.key})
+      Object.assign(noteNewUser, { id: val.key })
       newNotes.push(noteNewUser)
     }
     this.setState({ 
@@ -106,20 +108,29 @@ class DashBoard extends React.Component {
       type: 'ADD'
     })
   }
-  removeTitle = () => {
-    alert('developing')
+
+  openModal = () => {
+    this.setState({type:'MODAL',visible: true})
   }
+
+  closeModal = () => {
+    this.setState({type:'MODAL',visible: false})
+  }
+  
   render() {
     const { logout } = this.props
     const { titles, indexTitle } = this.state
-    const options = { theme: 'material text-note' }
+    const options = { 
+      theme: 'material text-note',
+      viewportMargin: 50
+    }
     return (
       <div className="main-dashboard">
         <Header FbResponse ={ this.props.FbResponse }/>
         <div className="main-note">
           <div className="btn-main">
             <Button color="rgb(107, 207, 82)" onClick={ () => this.addTitle() }>ADD</Button>
-            <Button color="#F33A3A" onClick={ () => this.removeTitle() }>REMOVE</Button>
+            <Button color="#F33A3A" onClick={ () => this.openModal() }>REMOVE</Button>
             <Button color="rgb(65, 83, 180)" onClick={ () => logout()} >SignOut</Button>
           </div>
           <div className="all-title">
@@ -128,6 +139,7 @@ class DashBoard extends React.Component {
                 key={note.id} 
                 onClick={() => this.onContentChange(index, note.id)}
                 selected = {indexTitle === index}
+                animation='fade'
               >
                 {note.title}
               </Tab>
@@ -152,9 +164,27 @@ class DashBoard extends React.Component {
             </div>
           </div>
         </div>
+        <Modal visible={ this.state.visible } closeModal={ this.closeModal }/>
       </div>
     )
   }
+}
+const Modal = (props) => {
+  return (
+    <div className="modal" style={props.visible ? {'display': 'block'} : {'display' : 'none'}}>
+      <ModalRemove>
+        <div className="modal-content-detail">
+          <div className="close" onClick={ props.closeModal }>X</div>
+          <div className="modal-title">WARNING !!</div>
+          <div className="modal-header">If you remove. All contents will destroy.</div>
+          <div className="modal-btn">
+            <ButtonModal column="2" color="#7CFC00">OK</ButtonModal>
+            <ButtonModal onClick={ props.closeModal } column="4" color="#DC143C">Cancle</ButtonModal>
+          </div>
+        </div>
+      </ModalRemove>
+    </div>
+  )
 }
 
 const Button = styled.a`
@@ -169,6 +199,38 @@ const Button = styled.a`
   padding-top:5px;
   margin-bottom: 20px;
   cursor: pointer;
+  &:hover{
+    background: #202020;
+  }
+`
+
+const ButtonModal = Button.extend`
+  grid-column: ${props => props.column};
+  width: 100px;
+`
+
+const animatationTop = keyframes`
+  from {
+    top:-300px; 
+    opacity:0
+  }
+  to {
+    top:0; 
+    opacity:1
+  }
+`
+
+const ModalRemove  = styled.div`
+  background: #121212;
+  border-radius: 5px;
+  position: relative;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #FFFFFF;
+  width: 350px;
+  height: 180px;
+  animation-name: ${animatationTop};
+  animation-duration: 0.4s
 `
 
 const Tab = styled.div`
