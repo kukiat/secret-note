@@ -65,6 +65,12 @@ class DashBoard extends React.Component {
     }
   }
 
+  async componentWillUnmount() {
+    if(this.isBlank(this.state.value)) {
+      await db.ref('note').child(this.state.tabId).remove()
+    }
+  }
+
   isBlank = (text) => {
     return !text || text.length === 0 || /^\s*$/.test(text)
   }
@@ -100,7 +106,9 @@ class DashBoard extends React.Component {
       type: 'ADD'
     })
   }
-  
+  removeTitle = () => {
+    alert('developing')
+  }
   render() {
     const { logout } = this.props
     const { titles, indexTitle } = this.state
@@ -111,6 +119,7 @@ class DashBoard extends React.Component {
         <div className="main-note">
           <div className="btn-main">
             <Button color="rgb(107, 207, 82)" onClick={ () => this.addTitle() }>ADD</Button>
+            <Button color="#F33A3A" onClick={ () => this.removeTitle() }>REMOVE</Button>
             <Button color="rgb(65, 83, 180)" onClick={ () => logout()} >SignOut</Button>
           </div>
           <div className="all-title">
