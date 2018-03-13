@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Modal }  from './Modal'
+import { Modal, RemoveModalBody }  from './Modal'
 import Topic from './Topic'
 import Note from './Note'
 import firebase from '../config'
@@ -18,7 +18,7 @@ class DashBoard extends React.Component {
       tabId: null,
       indexTitle: 0,
       type: '',
-      visible: false
+      visibleRemove: false
     }
   }
 
@@ -111,11 +111,11 @@ class DashBoard extends React.Component {
   }
 
   openModal = () => {
-    this.setState({type:'MODAL',visible: true})
+    this.setState({type:'MODAL',visibleRemove: true})
   }
 
   closeModal = () => {
-    this.setState({type:'MODAL',visible: false})
+    this.setState({type:'MODAL',visibleRemove: false})
   }
 
   removeTitle = async () => {
@@ -128,7 +128,7 @@ class DashBoard extends React.Component {
         titles: titles, 
         indexTitle: 0, 
         value: this.state.titles[0].content ,
-        visible: false
+        visibleRemove: false
       })
     }else {
       console.log('topic must have 1')
@@ -157,11 +157,12 @@ class DashBoard extends React.Component {
             value ={ value }
           />
         </div>
-        <Modal 
-          visible={ this.state.visible } 
-          closeModal={ this.closeModal }
-          removeTitle={ this.removeTitle }
-        />
+        <Modal visible={ this.state.visibleRemove } >
+          <RemoveModalBody 
+            removeTitle={ this.removeTitle } 
+            closeModal={ this.closeModal }
+          />
+        </Modal>
       </div>
     )
   }

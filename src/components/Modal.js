@@ -5,17 +5,23 @@ export const Modal = (props) => {
   return(
     <WrapModal visible={props.visible}>
       <ModalRemove>
-        <div className="modal-content-detail">
-          <div className="close" onClick={ props.closeModal }>X</div>
-          <div className="modal-title">WARNING !!</div>
-          <div className="modal-header">If you remove. This note will destroy.</div>
-          <div className="modal-btn">
-            <ButtonModal onClick={ props.removeTitle } column="2" color="#7CFC00">OK</ButtonModal>
-            <ButtonModal onClick={ props.closeModal } column="4" color="#DC143C">Cancle</ButtonModal>
-          </div>
-        </div>
+        { props.children }
       </ModalRemove>
     </WrapModal>
+  )
+}
+
+export const RemoveModalBody = (props) => {
+  return (
+    <div className="modal-content-detail">
+      <div className="close" onClick={ props.closeModal }>X</div>
+      <div className="modal-title">WARNING !!</div>
+      <div className="modal-header">If you remove. This note will destroy.</div>
+      <div className="modal-btn">
+        <ButtonModal onClick={ props.removeTitle } column="2" color="#7CFC00">OK</ButtonModal>
+        <ButtonModal onClick={ props.closeModal } column="4" color="#DC143C">Cancle</ButtonModal>
+      </div>
+    </div>
   )
 }
 
