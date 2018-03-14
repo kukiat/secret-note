@@ -4,7 +4,7 @@ import styled from 'styled-components'
 class Home extends React.Component{
   render() {
     return (
-      <div className="home">
+      <div className="">
         <Title>Secret Note</Title>
         <FbButton onClick={ this.props.login }>
           <FbIcon>F</FbIcon> 

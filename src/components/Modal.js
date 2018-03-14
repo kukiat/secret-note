@@ -1,29 +1,40 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
-export const Modal = (props) => {
-  return(
-    <WrapModal visible={props.visible}>
-      <ModalRemove>
-        { props.children }
-      </ModalRemove>
-    </WrapModal>
-  )
-}
-
-export const RemoveModalBody = (props) => {
-  return (
-    <div className="modal-content-detail">
-      <div className="close" onClick={ props.closeModal }>X</div>
-      <div className="modal-title">WARNING !!</div>
-      <div className="modal-header">If you remove. This note will destroy.</div>
-      <div className="modal-btn">
-        <ButtonModal onClick={ props.removeTitle } column="2" color="#7CFC00">OK</ButtonModal>
-        <ButtonModal onClick={ props.closeModal } column="4" color="#DC143C">Cancle</ButtonModal>
-      </div>
-    </div>
-  )
-}
+const ModalBody = styled.div`
+  display: grid;
+  grid-template-rows: 5% 25% 35% 30%;
+  height: 100%;
+  .modal-close {
+    color: #FFFFFF;
+    grid-row: 1;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px 0px 0px 330px;
+    font-weight: 700;
+    &:hover {
+      color: rgb(219, 217, 217);
+    }
+  }
+  .modal-title {
+    text-align: center;
+    grid-row: 2;
+    padding: 7px 0px 0px 0px;
+    color: rgb(187, 26, 26);
+    font-weight: bold;
+    border-bottom: solid 1px #FFFFFF;
+  }
+  .modal-header {
+    grid-row: 3;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .modal-btn {
+    grid-row: 4;
+    display: grid;
+    grid-template-columns: 10% 35% 10% 35% 10%;
+  }
+`
 
 export const Btn = (props) => {
   return `
@@ -81,3 +92,27 @@ const ButtonModal = styled.a`
   grid-column: ${props => props.column};
   width: 100px;
 `
+
+export const Modal = (props) => {
+  return(
+    <WrapModal visible={props.visible}>
+      <ModalRemove>
+        { props.children }
+      </ModalRemove>
+    </WrapModal>
+  )
+}
+
+export const RemoveModalBody = (props) => {
+  return (
+    <ModalBody>
+      <div className="modal-close" onClick={ props.closeModal }>X</div>
+      <div className="modal-title">WARNING !!</div>
+      <div className="modal-header">If you remove. This note will destroy.</div>
+      <div className="modal-btn">
+        <ButtonModal onClick={ props.removeTitle } column="2" color="#7CFC00">OK</ButtonModal>
+        <ButtonModal onClick={ props.closeModal } column="4" color="#DC143C">Cancle</ButtonModal>
+      </div>
+    </ModalBody>
+  )
+}

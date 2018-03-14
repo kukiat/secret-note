@@ -141,7 +141,7 @@ class DashBoard extends React.Component {
     return (
       <div className="main-dashboard">
         <Header FbResponse ={ this.props.FbResponse }/>
-        <div className="main-note">
+        <ContainerNote>
           <div className="btn-main">
             <Button color="rgb(107, 207, 82)" onClick={ () => this.addTitle() }>ADD</Button>
             <Button color="#F33A3A" onClick={ () => this.openModal() }>REMOVE</Button>
@@ -156,7 +156,7 @@ class DashBoard extends React.Component {
             onValueChange={this.onValueChange}
             value ={ value }
           />
-        </div>
+        </ContainerNote>
         <Modal visible={ this.state.visibleRemove } >
           <RemoveModalBody 
             removeTitle={ this.removeTitle } 
@@ -167,6 +167,20 @@ class DashBoard extends React.Component {
     )
   }
 }
+
+const ContainerNote = styled.div`
+  font-weight: 400px;
+  margin-top: 25px;
+  height: 550px;
+  display: grid;
+  grid-template-columns: repeat(20,5%);
+  .btn-main {
+    grid-column: 2/3; 
+    display: grid;
+    grid-template-rows: repeat(20,5%);
+    grid-gap: 20px;
+  }
+`
 
 const Button = styled.a`
   ${props => Btn(props)}

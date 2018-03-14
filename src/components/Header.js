@@ -15,7 +15,7 @@ export default class Header extends React.Component {
     const { name='' } = this.state.profile
     return (
       <div>
-        <div className="head-title">{ name }</div>
+        <h1 className="head-title">{ name }</h1>
       </div>
     )
   }
