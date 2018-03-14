@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Modal, RemoveModalBody, Btn }  from './Modal'
+import { Modal, RemoveBody, Btn }  from './Modal'
 import Topic from './Topic'
 import Note from './Note'
 import firebase from '../config'
@@ -138,6 +138,7 @@ class DashBoard extends React.Component {
   render() {
     const { logout } = this.props
     const { titles, indexTitle, value } = this.state
+    const ModalRemove = Modal(RemoveBody)
     return (
       <div className="main-dashboard">
         <Header FbResponse ={ this.props.FbResponse }/>
@@ -157,12 +158,11 @@ class DashBoard extends React.Component {
             value ={ value }
           />
         </ContainerNote>
-        <Modal visible={ this.state.visibleRemove } >
-          <RemoveModalBody 
-            removeTitle={ this.removeTitle } 
-            closeModal={ this.closeModal }
-          />
-        </Modal>
+        <ModalRemove 
+          visible={ this.state.visibleRemove } 
+          removeTitle={ this.removeTitle } 
+          closeModal={ this.closeModal }
+        />
       </div>
     )
   }

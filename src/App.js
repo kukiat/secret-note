@@ -41,18 +41,9 @@ class App extends Component {
     const { userId, currentStatus, FbResponse } = this.state
     return (
       <div className="App">
-        {
-          currentStatus ?
-          <div>
-            <DashBoard 
-              userId = { userId }
-              FbResponse = { FbResponse }
-              // userId = '{ userId }'
-              logout = { this.logout }
-            />
-          </div>
-          : 
-          <Home login={ this.login }/>
+        { currentStatus ?
+          <DashBoard userId = { userId } FbResponse = { FbResponse } logout = { this.logout } />
+          : <Home login={ this.login }/>
         }
       </div>
     );

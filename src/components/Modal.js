@@ -1,6 +1,30 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
+export const Modal = (C) => (props) => {
+  return(
+    <WrapModal visible={props.visible}>
+      <ModalRemove visible={props.visible}>
+        <C {...props}/>
+      </ModalRemove>
+    </WrapModal>
+  )
+}
+
+export const RemoveBody = (props) => {
+  return (
+    <ModalBody>
+      <div className="modal-close" onClick={ props.closeModal }>X</div>
+      <div className="modal-title">WARNING !!</div>
+      <div className="modal-header">If you remove. This note will destroy.</div>
+      <div className="modal-btn">
+        <ButtonModal onClick={ props.removeTitle } column="2" color="#7CFC00">OK</ButtonModal>
+        <ButtonModal onClick={ props.closeModal } column="4" color="#DC143C">Cancle</ButtonModal>
+      </div>
+    </ModalBody>
+  )
+}
+
 const ModalBody = styled.div`
   display: grid;
   grid-template-rows: 5% 25% 35% 30%;
@@ -93,26 +117,3 @@ const ButtonModal = styled.a`
   width: 100px;
 `
 
-export const Modal = (props) => {
-  return(
-    <WrapModal visible={props.visible}>
-      <ModalRemove>
-        { props.children }
-      </ModalRemove>
-    </WrapModal>
-  )
-}
-
-export const RemoveModalBody = (props) => {
-  return (
-    <ModalBody>
-      <div className="modal-close" onClick={ props.closeModal }>X</div>
-      <div className="modal-title">WARNING !!</div>
-      <div className="modal-header">If you remove. This note will destroy.</div>
-      <div className="modal-btn">
-        <ButtonModal onClick={ props.removeTitle } column="2" color="#7CFC00">OK</ButtonModal>
-        <ButtonModal onClick={ props.closeModal } column="4" color="#DC143C">Cancle</ButtonModal>
-      </div>
-    </ModalBody>
-  )
-}
