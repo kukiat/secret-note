@@ -14,7 +14,7 @@ export const Modal = (C) => (props) => {
 export const RemoveBody = (props) => {
   return (
     <ModalBody>
-      <div className="modal-close" onClick={ props.closeModal }>X</div>
+      <div className="modal-close" onClick={ () => props.closeModal('REMOVE_MODAL') }>X</div>
       <div className="modal-title">WARNING !!</div>
       <div className="modal-header">If you remove. This note will destroy.</div>
       <div className="modal-btn">

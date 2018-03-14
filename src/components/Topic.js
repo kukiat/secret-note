@@ -1,17 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
 
+function moveValueToEnd(e) {
+  const temp_value = e.target.value
+  e.target.value = ''
+  e.target.value = temp_value
+}
+
 const Topic = (props) => {
   return (
     <AllTopic>
       {props.titles.map((note, index) => (
         <Tab 
           key={note.id} 
-          onClick={ () => props.onContentChange(index, note.id)}
+          onClick={ () => props.onChangeConTent(index, note.id)}
           selected = {props.indexTitle === index}
           animation='fade'
+          onDoubleClick={ () => props.onOpenInput(index)}
         >
-          {note.title}
+          { props.dbEdit ===  index ? 
+            <InputText
+              defaultValue={note.title}
+              autoFocus
+              onFocus={ (e) => moveValueToEnd(e)}
+              onChange={ (e) => props.onChangeTitle(e, note.id) }
+            /> 
+            : note.title.substring(0,12) 
+          }
         </Tab>
       ))
       } 
@@ -28,6 +43,19 @@ const AllTopic = styled.div`
   border-top: 2px solid #FFFFFF;
   border-bottom: 2px solid #FFFFFF;
   overflow-y: scroll;
+`
+
+const InputText = styled.input.attrs({
+  type: 'text',
+  // value : props => props.val
+})`
+  border-radius: 5px;
+  width: 80%;
+  font-size: 16px;
+  height: 30px;
+  background: rgb(23,44,56);
+  color: #FFFFFF;
+  border: 1px solid rgb(23,44,56);
 `
 
 const Tab = styled.div`

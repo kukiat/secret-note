@@ -40,7 +40,7 @@ class App extends Component {
   render() {
     const { userId, currentStatus, FbResponse } = this.state
     return (
-      <div className="App">
+      <div className="App" >
         { currentStatus ?
           <DashBoard userId = { userId } FbResponse = { FbResponse } logout = { this.logout } />
           : <Home login={ this.login }/>

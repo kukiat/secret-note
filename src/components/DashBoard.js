@@ -21,7 +21,8 @@ class DashBoard extends React.Component {
       visible: {
         remove: false,
         share: false
-      }
+      },
+      dbEdit: -1
     }
   }
 
@@ -77,7 +78,7 @@ class DashBoard extends React.Component {
     return !text || text.length === 0 || /^\s*$/.test(text)
   }
 
-  onContentChange = (index, id) => {
+  onChangeConTent = (index, id) => {
     const { titles, value, indexTitle } = this.state
     const titleContent = titles[index].content
     if(this.isBlank(value) && indexTitle !== index) {
@@ -109,33 +110,8 @@ class DashBoard extends React.Component {
     })
   }
 
-  onValueChange = (values) => {
-    this.setState({ value: values, type: 'UPDATE' })
-  }
-
-  chooseModal = (typeModal, status) => {
-    const { visible } = this.state
-    switch (typeModal) {
-      case 'REMOVE_MODAL':
-        this.setState({type: 'MODAL', visible: {...visible, remove: status}})
-        break;
-      case 'SHARE_MODAL':
-        this.setState({type: 'MODAL', visible: {...visible, share: status}})
-        break;
-      default:
-        break;
-    }
-  }
-  openModal = (typeModal) => {
-    this.chooseModal(typeModal, true)
-  }
-
-  closeModal = (typeModal) => {
-    this.chooseModal(typeModal, false)
-  }
-
   removeTitle = async () => {
-    const { titles} = this.state
+    const { titles } = this.state
     if(this.state.titles.length > 1) {
       await db.ref('note').child(this.state.tabId).remove()
       titles.splice(this.state.indexTitle, 1)
@@ -151,12 +127,53 @@ class DashBoard extends React.Component {
     }
   }
 
+  chooseModal = (typeModal, status) => {
+    const { visible } = this.state
+    switch (typeModal) {
+      case 'REMOVE_MODAL':
+        this.setState({type: 'MODAL', visible: {...visible, remove: status}})
+        break;
+      case 'SHARE_MODAL':
+        this.setState({type: 'MODAL', visible: {...visible, share: status}})
+        break;
+      default:
+        break;
+    }
+  }
+
+  onChangeTitle = (e, noteId) => {
+    db.ref('note').child(noteId).update({ title: e.target.value })
+    const index = this.state.titles.findIndex((n) => n.id === noteId)
+    Object.assign(this.state.titles[index], {title: e.target.value})
+    this.setState({ titles: this.state.titles, type: 'UPDATE_TITLE'})
+  }
+
+  onValueChange = (values) => {
+    this.setState({ value: values, type: 'UPDATE' })
+  }
+
+  openModal = (typeModal) => {
+    this.chooseModal(typeModal, true)
+  }
+
+  closeModal = (typeModal) => {
+    this.chooseModal(typeModal, false)
+  }
+
+  onOpenInput = (index) => {
+    this.setState({ dbEdit: index, type: 'EDIT_TITLE' })
+  }
+
+  onClickOther = (e) => {
+    if(this.state.dbEdit !== -1) this.setState({ dbEdit: -1, type: '' })
+  }
+
   render() {
     const { logout } = this.props
     const { titles, indexTitle, value, visible } = this.state
     const ModalRemove = Modal(RemoveBody)
     return (
-      <div className="main-dashboard">
+      <div className="main-dashboard" onClick ={ this.onClickOther }>
         <Header FbResponse ={ this.props.FbResponse }/>
         <ContainerNote>
           <div className="btn-main">
@@ -167,8 +184,11 @@ class DashBoard extends React.Component {
           </div>
           <Topic 
             titles={ titles } 
-            onContentChange={this.onContentChange}
-            indexTitle = {indexTitle}
+            onChangeConTent={ this.onChangeConTent }
+            onChangeTitle={ this.onChangeTitle }
+            onOpenInput = { this.onOpenInput }
+            indexTitle={ indexTitle }
+            dbEdit={ this.state.dbEdit }
           />
           <Note
             onValueChange={this.onValueChange}
