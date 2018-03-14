@@ -16,10 +16,11 @@ const Topic = (props) => {
           onClick={ () => props.onChangeConTent(index, note.id)}
           selected = {props.indexTitle === index}
           animation='fade'
-          onDoubleClick={ () => props.onOpenInput(index)}
+          onDoubleClick={ (e) => props.onOpenInput(e, index)}
         >
           { props.dbEdit ===  index ? 
             <InputText
+              id="unless"
               defaultValue={note.title}
               autoFocus
               onFocus={ (e) => moveValueToEnd(e)}

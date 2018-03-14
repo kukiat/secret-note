@@ -160,12 +160,14 @@ class DashBoard extends React.Component {
     this.chooseModal(typeModal, false)
   }
 
-  onOpenInput = (index) => {
+  onOpenInput = (e, index) => {
     this.setState({ dbEdit: index, type: 'EDIT_TITLE' })
   }
 
   onClickOther = (e) => {
-    if(this.state.dbEdit !== -1) this.setState({ dbEdit: -1, type: '' })
+    if(this.state.dbEdit !== -1 && e.target.id !=='unless') {
+      this.setState({ dbEdit: -1, type: '' })
+    }
   }
 
   render() {
@@ -173,7 +175,7 @@ class DashBoard extends React.Component {
     const { titles, indexTitle, value, visible } = this.state
     const ModalRemove = Modal(RemoveBody)
     return (
-      <div className="main-dashboard" onClick ={ this.onClickOther }>
+      <div className="main-dashboard" onClick ={ (e) => this.onClickOther(e) }>
         <Header FbResponse ={ this.props.FbResponse }/>
         <ContainerNote>
           <div className="btn-main">
