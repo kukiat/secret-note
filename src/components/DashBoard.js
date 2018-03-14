@@ -18,7 +18,10 @@ class DashBoard extends React.Component {
       tabId: null,
       indexTitle: 0,
       type: '',
-      visibleRemove: false
+      visible: {
+        remove: false,
+        share: false
+      }
     }
   }
 
@@ -110,12 +113,25 @@ class DashBoard extends React.Component {
     this.setState({ value: values, type: 'UPDATE' })
   }
 
-  openModal = () => {
-    this.setState({type:'MODAL',visibleRemove: true})
+  chooseModal = (typeModal, status) => {
+    const { visible } = this.state
+    switch (typeModal) {
+      case 'REMOVE_MODAL':
+        this.setState({type: 'MODAL', visible: {...visible, remove: status}})
+        break;
+      case 'SHARE_MODAL':
+        this.setState({type: 'MODAL', visible: {...visible, share: status}})
+        break;
+      default:
+        break;
+    }
+  }
+  openModal = (typeModal) => {
+    this.chooseModal(typeModal, true)
   }
 
-  closeModal = () => {
-    this.setState({type:'MODAL',visibleRemove: false})
+  closeModal = (typeModal) => {
+    this.chooseModal(typeModal, false)
   }
 
   removeTitle = async () => {
@@ -128,7 +144,7 @@ class DashBoard extends React.Component {
         titles: titles, 
         indexTitle: 0, 
         value: this.state.titles[0].content ,
-        visibleRemove: false
+        visible: { ...this.state.value, remove: false}
       })
     }else {
       console.log('topic must have 1')
@@ -137,7 +153,7 @@ class DashBoard extends React.Component {
 
   render() {
     const { logout } = this.props
-    const { titles, indexTitle, value } = this.state
+    const { titles, indexTitle, value, visible } = this.state
     const ModalRemove = Modal(RemoveBody)
     return (
       <div className="main-dashboard">
@@ -145,7 +161,8 @@ class DashBoard extends React.Component {
         <ContainerNote>
           <div className="btn-main">
             <Button color="rgb(107, 207, 82)" onClick={ () => this.addTitle() }>ADD</Button>
-            <Button color="#F33A3A" onClick={ () => this.openModal() }>REMOVE</Button>
+            <Button color="#F33A3A" onClick={ () => this.openModal('REMOVE_MODAL') }>REMOVE</Button>
+            <Button color="#3399FF" onClick={ () => this.openModal('SHARE_MODAL') }>SHARE</Button>
             <Button color="rgb(65, 83, 180)" onClick={ () => logout()} >SignOut</Button>
           </div>
           <Topic 
@@ -159,7 +176,7 @@ class DashBoard extends React.Component {
           />
         </ContainerNote>
         <ModalRemove 
-          visible={ this.state.visibleRemove } 
+          visible={ visible.remove } 
           removeTitle={ this.removeTitle } 
           closeModal={ this.closeModal }
         />

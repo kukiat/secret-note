@@ -19,7 +19,7 @@ export const RemoveBody = (props) => {
       <div className="modal-header">If you remove. This note will destroy.</div>
       <div className="modal-btn">
         <ButtonModal onClick={ props.removeTitle } column="2" color="#7CFC00">OK</ButtonModal>
-        <ButtonModal onClick={ props.closeModal } column="4" color="#DC143C">Cancle</ButtonModal>
+        <ButtonModal onClick={ () => props.closeModal('REMOVE_MODAL') } column="4" color="#DC143C">Cancle</ButtonModal>
       </div>
     </ModalBody>
   )
