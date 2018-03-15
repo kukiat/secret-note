@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Modal, RemoveBody, Btn }  from './Modal'
-import Topic from './Topic'
-import Note from './Note'
+import { Modal, RemoveBody, Btn }  from '../components/Modal'
+import Topic from '../components/Topic'
+import Note from '../components/Note'
 import firebase from '../config'
 import Header from './Header'
 
