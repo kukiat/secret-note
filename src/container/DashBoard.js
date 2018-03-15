@@ -171,6 +171,7 @@ class DashBoard extends React.Component {
   }
 
   render() {
+    console.log('render')
     const { logout } = this.props
     const { titles, indexTitle, value, visible } = this.state
     const ModalRemove = Modal(RemoveBody)

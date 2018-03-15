@@ -22,7 +22,6 @@ const Topic = (props) => {
             <InputText
               id="unless"
               defaultValue={note.title}
-              autoFocus
               onFocus={ (e) => moveValueToEnd(e)}
               onChange={ (e) => props.onChangeTitle(e, note.id) }
             /> 
@@ -48,11 +47,12 @@ const AllTopic = styled.div`
 
 const InputText = styled.input.attrs({
   type: 'text',
-  // value : props => props.val
+  autoFocus: true
 })`
   border-radius: 5px;
   width: 80%;
   font-size: 16px;
+  margin-top: -15px;
   height: 30px;
   background: rgb(23,44,56);
   color: #FFFFFF;
@@ -61,7 +61,7 @@ const InputText = styled.input.attrs({
 
 const Tab = styled.div`
   height: 35px;
-  padding-top:15px;
+  padding-top: 15px;
   border-bottom: 2px solid #FFFFFF; 
   cursor: pointer;
   background: ${props => props.selected ? 'rgb(44,44,44)' : 'rgb(22,22,22)'}
