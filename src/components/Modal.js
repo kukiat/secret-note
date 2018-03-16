@@ -112,7 +112,7 @@ const ModalRemove  = styled.div`
 `
 
 const ButtonModal = styled.a`
-  ${ props => Btn(props)}
+  ${ props => Btn(props)};
   grid-column: ${props => props.column};
   width: 100px;
 `

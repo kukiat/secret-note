@@ -9,6 +9,8 @@ import Header from './Header'
 
 const db = firebase.database()
 
+const ModalRemove = Modal(RemoveBody)
+
 class DashBoard extends React.Component {
   constructor(props) {
     super(props)
@@ -176,7 +178,6 @@ class DashBoard extends React.Component {
   render() {
     const { logout } = this.props
     const { titles, indexTitle, value, visible } = this.state
-    const ModalRemove = Modal(RemoveBody)
     return (
       <div className="main-dashboard" onClick ={ (e) => this.onClickOther(e) }>
         <Header FbResponse ={ this.props.FbResponse }/>
@@ -200,11 +201,13 @@ class DashBoard extends React.Component {
             value ={ value }
           />
         </ContainerNote>
-        <ModalRemove 
-          visible={ visible.remove } 
-          removeTitle={ this.removeTitle } 
-          closeModal={ this.closeModal }
-        />
+        { visible.remove && 
+          <ModalRemove 
+            visible={ visible.remove } 
+            removeTitle={ this.removeTitle } 
+            closeModal={ this.closeModal }
+          />
+        }
       </div>
     )
   }
