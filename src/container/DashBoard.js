@@ -57,7 +57,7 @@ class DashBoard extends React.Component {
       Object.assign(titles[indexTitle], {content: value})
       this.setState({ titles: titles, type: '' })
     }
-    if(type === 'REMOVE') {
+    if(type === 'REMOVE_BLANK') {
       await db.ref('note').child(prevState.tabId).remove()
       titles.splice(prevState.indexTitle, 1)
       if(prevState.indexTitle < indexTitle) {
@@ -85,7 +85,7 @@ class DashBoard extends React.Component {
       this.setState({
         indexTitle: index,
         value : titleContent,
-        type: 'REMOVE'
+        type: 'REMOVE_BLANK'
       })
     }
     else if(indexTitle !== index) {
@@ -99,13 +99,14 @@ class DashBoard extends React.Component {
   }
 
   addTitle = async () => {
-    const newNote = {title: 'newTitle', userId: this.props.userId, content: 'content = '+ Math.random().toString() }
+    const newNote = {title: 'New Title', userId: this.props.userId, content: 'New note' }
     const ref = await db.ref('note').push(newNote)
     this.state.titles.unshift(Object.assign(newNote, { id: ref.key }))
     this.setState({
       titles: this.state.titles,
       value: newNote.content,
       indexTitle: 0,
+      tabId: ref.key,
       type: 'ADD'
     })
   }
@@ -116,15 +117,17 @@ class DashBoard extends React.Component {
       await db.ref('note').child(this.state.tabId).remove()
       titles.splice(this.state.indexTitle, 1)
       this.setState({ 
-        type: '', 
-        titles: titles, 
-        indexTitle: 0, 
+        type: 'REMOVE', 
+        titles: titles,
+        tabId: this.state.titles[0].id,
         value: this.state.titles[0].content ,
-        visible: { ...this.state.value, remove: false}
+        indexTitle: 0, 
+        visible: { ...this.state.visible, remove: false}
       })
-    }else {
-      console.log('topic must have 1')
     }
+    // else {
+    //   console.log('topic must have 1')
+    // }
   }
 
   chooseModal = (typeModal, status) => {
@@ -134,7 +137,7 @@ class DashBoard extends React.Component {
         this.setState({type: 'MODAL', visible: {...visible, remove: status}})
         break;
       case 'SHARE_MODAL':
-        this.setState({type: 'MODAL', visible: {...visible, share: status}})
+        // this.setState({type: 'MODAL', visible: {...visible, share: status}})
         break;
       default:
         break;
@@ -171,7 +174,6 @@ class DashBoard extends React.Component {
   }
 
   render() {
-    console.log('render')
     const { logout } = this.props
     const { titles, indexTitle, value, visible } = this.state
     const ModalRemove = Modal(RemoveBody)
@@ -183,7 +185,7 @@ class DashBoard extends React.Component {
             <Button color="rgb(107, 207, 82)" onClick={ () => this.addTitle() }>ADD</Button>
             <Button color="#F33A3A" onClick={ () => this.openModal('REMOVE_MODAL') }>REMOVE</Button>
             <Button color="#3399FF" onClick={ () => this.openModal('SHARE_MODAL') }>SHARE</Button>
-            <Button color="rgb(65, 83, 180)" onClick={ () => logout()} >SignOut</Button>
+            <Button color="#F8CC52" onClick={ () => logout()} >SignOut</Button>
           </div>
           <Topic 
             titles={ titles } 

@@ -1,18 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 
-class Home extends React.Component{
-  render() {
-    return (
-      <div className="">
-        <Title>Secret Note</Title>
-        <FbButton onClick={ this.props.login }>
-          <FbIcon>F</FbIcon> 
-          <span>Login with Facebook</span>
-        </FbButton>
-      </div>
-    )
-  }
+const Home = (props) => {
+  return (
+    <div className="">
+      <Title>Secret Note</Title>
+      <FbButton onClick={ props.login }>
+        <FbIcon>F</FbIcon> 
+        <span>Login with Facebook</span>
+      </FbButton>
+    </div>
+  )
 }
 
 const Title = styled.div`
