@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Modal, RemoveBody, Btn }  from '../components/Modal'
+import { Modal, RemoveBody, ShareBody, Btn }  from '../components/Modal'
 import Topic from '../components/Topic'
 import Note from '../components/Note'
 import firebase from '../config'
@@ -10,6 +10,7 @@ import Header from './Header'
 const db = firebase.database()
 
 const ModalRemove = Modal(RemoveBody)
+const ModalShare = Modal(ShareBody)
 
 class DashBoard extends React.Component {
   constructor(props) {
@@ -139,7 +140,7 @@ class DashBoard extends React.Component {
         this.setState({type: 'MODAL', visible: {...visible, remove: status}})
         break;
       case 'SHARE_MODAL':
-        // this.setState({type: 'MODAL', visible: {...visible, share: status}})
+        this.setState({type: 'MODAL', visible: {...visible, share: status}})
         break;
       default:
         break;
@@ -201,6 +202,12 @@ class DashBoard extends React.Component {
             value ={ value }
           />
         </ContainerNote>
+        { visible.share && 
+          <ModalShare 
+            visible={ visible.share }
+            closeModal={ this.closeModal }
+          />
+        }
         { visible.remove && 
           <ModalRemove 
             visible={ visible.remove } 

@@ -25,6 +25,34 @@ export const RemoveBody = (props) => {
   )
 }
 
+export const ShareBody = (props) => {
+  return (
+    <ModalBody>
+      <div className="modal-close" onClick={ () => props.closeModal('SHARE_MODAL') }>X</div>
+      <div className="modal-title">SHARE</div>
+      <div className="modal-header"><InputText placeholder="friend url"/></div>
+      <div className="modal-btn">
+        <ButtonModal column="2" color="#7CFC00">OK</ButtonModal>
+        <ButtonModal onClick={ () => props.closeModal('REMOVE_MODAL') } column="4" color="#DC143C">Cancle</ButtonModal>
+      </div>
+    </ModalBody>
+  )
+}
+
+const InputText = styled.input.attrs({
+  type: 'text',
+  autoFocus: true
+})`
+  border-radius: 5px;
+  width: 80%;
+  font-size: 16px;
+  height: 30px;
+  background: rgb(23,44,56);
+  color: #FFFFFF;
+  border: 1px solid rgb(23,44,56);
+  padding :0 0 0 10px;
+`
+
 const ModalBody = styled.div`
   display: grid;
   grid-template-rows: 5% 25% 35% 30%;
