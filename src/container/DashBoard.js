@@ -9,8 +9,8 @@ import Header from './Header'
 
 const db = firebase.database()
 
-const ModalRemove = Modal(RemoveBody)
-const ModalShare = Modal(ShareBody)
+const RemoveModal = Modal(RemoveBody)
+const ShareModal = Modal(ShareBody)
 
 class DashBoard extends React.Component {
   constructor(props) {
@@ -202,16 +202,16 @@ class DashBoard extends React.Component {
             value ={ value }
           />
         </ContainerNote>
-        { visible.share && 
-          <ModalShare 
-            visible={ visible.share }
+        { visible.remove && 
+          <RemoveModal 
+            visible={ visible.remove } 
+            removeTitle={ this.removeTitle } 
             closeModal={ this.closeModal }
           />
         }
-        { visible.remove && 
-          <ModalRemove 
-            visible={ visible.remove } 
-            removeTitle={ this.removeTitle } 
+        { visible.share && 
+          <ShareModal 
+            visible={ visible.share }
             closeModal={ this.closeModal }
           />
         }

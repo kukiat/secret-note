@@ -33,7 +33,7 @@ export const ShareBody = (props) => {
       <div className="modal-header"><InputText placeholder="friend url"/></div>
       <div className="modal-btn">
         <ButtonModal column="2" color="#7CFC00">OK</ButtonModal>
-        <ButtonModal onClick={ () => props.closeModal('REMOVE_MODAL') } column="4" color="#DC143C">Cancle</ButtonModal>
+        <ButtonModal onClick={ () => props.closeModal('SHARE_MODAL') } column="4" color="#DC143C">Cancle</ButtonModal>
       </div>
     </ModalBody>
   )
@@ -44,7 +44,7 @@ const InputText = styled.input.attrs({
   autoFocus: true
 })`
   border-radius: 5px;
-  width: 80%;
+  width: 85%;
   font-size: 16px;
   height: 30px;
   background: rgb(23,44,56);
@@ -142,6 +142,6 @@ const ModalRemove  = styled.div`
 const ButtonModal = styled.a`
   ${ props => Btn(props)};
   grid-column: ${props => props.column};
-  width: 100px;
+  width: 100%;
 `
 
