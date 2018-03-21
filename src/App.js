@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   login = () => {
-    window.FB.login(this.checkCurrentStatus,{scope: 'email'})
+    window.FB.login(this.checkCurrentStatus)
   }
 
   logout = () => {

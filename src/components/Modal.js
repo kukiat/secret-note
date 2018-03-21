@@ -25,18 +25,21 @@ export const RemoveBody = (props) => {
   )
 }
 
-export const ShareBody = (props) => {
-  return (
-    <ModalBody>
-      <div className="modal-close" onClick={ () => props.closeModal('SHARE_MODAL') }>X</div>
-      <div className="modal-title">SHARE</div>
-      <div className="modal-header"><InputText placeholder="friend url"/></div>
-      <div className="modal-btn">
-        <ButtonModal column="2" color="#7CFC00">OK</ButtonModal>
-        <ButtonModal onClick={ () => props.closeModal('SHARE_MODAL') } column="4" color="#DC143C">Cancle</ButtonModal>
-      </div>
-    </ModalBody>
-  )
+export class ShareBody extends React.Component {
+  state = { urlFriend: '' }
+  render() {
+    return (
+      <ModalBody>
+        <div className="modal-close" onClick={ () => this.props.closeModal('SHARE_MODAL') }>X</div>
+        <div className="modal-title">SHARE</div>
+        <div className="modal-header"><InputText onChange={(e) => this.setState({ urlFriend: e.target.value })} placeholder="friend url"/></div>
+        <div className="modal-btn">
+          <ButtonModal onClick={() => this.props.shareTitle(this.state.urlFriend)} column="2" color="#7CFC00">OK</ButtonModal>
+          <ButtonModal onClick={() => this.props.closeModal('SHARE_MODAL') } column="4" color="#DC143C">Cancle</ButtonModal>
+        </div>
+      </ModalBody>
+    )
+  }
 }
 
 const InputText = styled.input.attrs({

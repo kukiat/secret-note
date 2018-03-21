@@ -176,6 +176,10 @@ class DashBoard extends React.Component {
     }
   }
 
+  shareTitle = (value) => {
+    console.log(value)
+  }
+
   render() {
     const { logout } = this.props
     const { titles, indexTitle, value, visible } = this.state
@@ -213,6 +217,7 @@ class DashBoard extends React.Component {
           <ShareModal 
             visible={ visible.share }
             closeModal={ this.closeModal }
+            shareTitle={ this.shareTitle }
           />
         }
       </div>
