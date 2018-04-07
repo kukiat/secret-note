@@ -6,6 +6,7 @@ import Topic from '../components/Topic'
 import Note from '../components/Note'
 import firebase from '../config'
 import Header from './Header'
+import CustomModal from '../components/CustomModal'
 
 const db = firebase.database()
 
@@ -192,6 +193,7 @@ class DashBoard extends React.Component {
             <Button color="#F33A3A" onClick={ () => this.openModal('REMOVE_MODAL') }>REMOVE</Button>
             <Button color="#3399FF" onClick={ () => this.openModal('SHARE_MODAL') }>SHARE</Button>
             <Button color="#F8CC52" onClick={ () => logout()} >SignOut</Button>
+            <CustomModal/>
           </div>
           <Topic 
             titles={ titles } 
