@@ -1,15 +1,7 @@
 import React from 'react'
+import ReactModal from 'react-modal'
 import styled, { keyframes } from 'styled-components'
-
-export const Modal = (C) => (props) => {
-  return(
-    <WrapModal visible={props.visible}>
-      <ModalRemove visible={props.visible}>
-        <C {...props}/>
-      </ModalRemove>
-    </WrapModal>
-  )
-}
+import ReactDOM from 'react-dom'
 
 export const RemoveBody = (props) => {
   return (
@@ -42,6 +34,43 @@ export class ShareBody extends React.Component {
   }
 }
 
+const customStyle = {
+  overlay: {
+    backgroundColor: 'rgba(0,0,0,.75)',
+    position: 'fixed',
+    zIndex: 1000,
+  },
+  content: {
+    backgroundColor: 'rgba(0,0,0,.75)',
+    width: '33%',
+    height: '20%',
+    top:'33%',
+    left:'33%',
+    right:'33%',
+  }
+}
+
+export const Modal = (Content) => {
+  return class extends React.Component {
+    render() {
+      return(
+        <ReactModal
+          isOpen={this.props.visible}
+          onRequestClose={() => {
+            document.body.style.overflow = 'auto'
+            this.props.closeModal('REMOVE_MODAL')
+          }}
+          onAfterOpen={ () => document.body.style.overflow = 'hidden'}
+          contentLabel="ModalRemove"
+          style={customStyle}
+        >
+          <Content {...this.props}/>
+        </ReactModal>
+      )
+    }
+  }
+}
+
 const InputText = styled.input.attrs({
   type: 'text',
   autoFocus: true
@@ -57,9 +86,11 @@ const InputText = styled.input.attrs({
 `
 
 const ModalBody = styled.div`
+width:50%;
   display: grid;
   grid-template-rows: 5% 25% 35% 30%;
   height: 100%;
+  /* background-color: rgba(0,0,0,0.4); */
   .modal-close {
     color: #FFFFFF;
     grid-row: 1;

@@ -6,12 +6,15 @@ import Topic from '../components/Topic'
 import Note from '../components/Note'
 import firebase from '../config'
 import Header from './Header'
-import CustomModal from '../components/CustomModal'
+import ReactDOM from 'react-dom'
+import ReactModal from 'react-modal'
 
 const db = firebase.database()
 
 const RemoveModal = Modal(RemoveBody)
 const ShareModal = Modal(ShareBody)
+
+ReactModal.setAppElement('#root');
 
 class DashBoard extends React.Component {
   constructor(props) {
@@ -186,6 +189,11 @@ class DashBoard extends React.Component {
     const { titles, indexTitle, value, visible } = this.state
     return (
       <div className="main-dashboard" onClick ={ (e) => this.onClickOther(e) }>
+        <RemoveModal 
+          visible={ visible.remove } 
+          removeTitle={ this.removeTitle } 
+          closeModal={ this.closeModal }
+        />
         <Header FbResponse ={ this.props.FbResponse }/>
         <ContainerNote>
           <div className="btn-main">
@@ -193,7 +201,6 @@ class DashBoard extends React.Component {
             <Button color="#F33A3A" onClick={ () => this.openModal('REMOVE_MODAL') }>REMOVE</Button>
             <Button color="#3399FF" onClick={ () => this.openModal('SHARE_MODAL') }>SHARE</Button>
             <Button color="#F8CC52" onClick={ () => logout()} >SignOut</Button>
-            <CustomModal/>
           </div>
           <Topic 
             titles={ titles } 
@@ -208,20 +215,6 @@ class DashBoard extends React.Component {
             value ={ value }
           />
         </ContainerNote>
-        { visible.remove && 
-          <RemoveModal 
-            visible={ visible.remove } 
-            removeTitle={ this.removeTitle } 
-            closeModal={ this.closeModal }
-          />
-        }
-        { visible.share && 
-          <ShareModal 
-            visible={ visible.share }
-            closeModal={ this.closeModal }
-            shareTitle={ this.shareTitle }
-          />
-        }
       </div>
     )
   }
@@ -245,4 +238,6 @@ const Button = styled.a`
   ${props => Btn(props)}
 `
 
+ReactDOM.render(<RemoveModal />, document.getElementById('root'))
+ReactDOM.render(<ShareModal />, document.getElementById('root'))
 export default DashBoard
