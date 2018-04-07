@@ -42,33 +42,30 @@ const customStyle = {
   },
   content: {
     backgroundColor: 'rgba(0,0,0,.75)',
-    width: '33%',
-    height: '20%',
-    top:'33%',
-    left:'33%',
-    right:'33%',
+    width: '350px',
+    height: '180px',
+    padding:'-20px',
+    top: '25%',
+    left: '50%',
+    transform: 'translate(-50%)'
   }
 }
 
-export const Modal = (Content) => {
-  return class extends React.Component {
-    render() {
-      return(
-        <ReactModal
-          isOpen={this.props.visible}
-          onRequestClose={() => {
-            document.body.style.overflow = 'auto'
-            this.props.closeModal('REMOVE_MODAL')
-          }}
-          onAfterOpen={ () => document.body.style.overflow = 'hidden'}
-          contentLabel="ModalRemove"
-          style={customStyle}
-        >
-          <Content {...this.props}/>
-        </ReactModal>
-      )
-    }
-  }
+export const Modal = (Content) => (props) => {
+  return(
+    <ReactModal
+      isOpen={props.visible}
+      onRequestClose={() => {
+        document.body.style.overflow = 'auto'
+        props.closeModal('REMOVE_MODAL')
+      }}
+      onAfterOpen={ () => document.body.style.overflow = 'hidden'}
+      contentLabel="ModalRemove"
+      style={customStyle}
+    >
+    <Content {...props}/>
+  </ReactModal>
+  )
 }
 
 const InputText = styled.input.attrs({
@@ -86,11 +83,9 @@ const InputText = styled.input.attrs({
 `
 
 const ModalBody = styled.div`
-width:50%;
   display: grid;
   grid-template-rows: 5% 25% 35% 30%;
   height: 100%;
-  /* background-color: rgba(0,0,0,0.4); */
   .modal-close {
     color: #FFFFFF;
     grid-row: 1;
@@ -140,20 +135,6 @@ export const Btn = (props) => {
     }
   `
 }
-
-const WrapModal = styled.div`
-  display: ${props => props.visible ? 'block' : 'none'};
-  position: fixed;
-  z-index: 2;
-  left: 0;
-  top: 0;
-  padding-top: 150px; 
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
-`
 
 const animatationTop = keyframes`
   from { top:-300px; opacity:0}
