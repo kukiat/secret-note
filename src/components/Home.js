@@ -4,7 +4,6 @@ import styled from 'styled-components'
 const Home = (props) => {
   return (
     <div className="">
-      <Title>Secret Note</Title>
       <FbButton onClick={ props.login }>
         <FbIcon>F</FbIcon> 
         <span>Login with Facebook</span>
@@ -12,12 +11,6 @@ const Home = (props) => {
     </div>
   )
 }
-
-const Title = styled.div`
-  font-size: 50px;
-  text-align: center;
-  margin-bottom: 30px;
-`
 
 const FbIcon =styled.span`
   margin-right :10px;
