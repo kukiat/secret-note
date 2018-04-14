@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import DashBoard from './container/DashBoard'
 import Home from './components/Home'
-import Loading from './components/Loading'
 import styled from 'styled-components'
 
 class App extends Component {
@@ -47,7 +46,7 @@ class App extends Component {
       <div className="app">
         <Title>Secret Note</Title>
         { loading ?
-          <Loading/>
+          null
           : <div>
               { currentStatus ?
                 <DashBoard userId = { userId } FbResponse = { FbResponse } logout = { this.logout } />
