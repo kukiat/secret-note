@@ -45,8 +45,7 @@ class App extends Component {
     return (
       <div className="app">
         <Title>Secret Note</Title>
-        { loading ?
-          null
+        { loading ? null
           : <div>
               { currentStatus ?
                 <DashBoard userId = { userId } FbResponse = { FbResponse } logout = { this.logout } />
