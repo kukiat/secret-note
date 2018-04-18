@@ -199,7 +199,7 @@ class DashBoard extends React.Component {
           <div className="btn-main">
             <Button color="rgb(107, 207, 82)" onClick={ () => this.addTitle() }>ADD</Button>
             <Button color="#F33A3A" onClick={ () => this.openModal('REMOVE_MODAL') }>REMOVE</Button>
-            <Button color="#3399FF" onClick={ () => this.openModal('SHARE_MODAL') }>SHARE</Button>
+            {/* <Button color="#3399FF" onClick={ () => this.openModal('SHARE_MODAL') }>SHARE</Button> */}
             <Button color="#F8CC52" onClick={ () => logout()} >SignOut</Button>
           </div>
           <Topic 
