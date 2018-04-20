@@ -23,7 +23,7 @@ export class ShareBody extends React.Component {
     return (
       <ModalBody>
         <div className="modal-close" onClick={ () => this.props.closeModal('SHARE_MODAL') }>X</div>
-        <div className="modal-title">SHARE</div>
+        <div className="modal-title">Send note to friends</div>
         <div className="modal-header"><InputText onChange={(e) => this.setState({ urlFriend: e.target.value })} placeholder="friend url"/></div>
         <div className="modal-btn">
           <ButtonModal onClick={() => this.props.shareTitle(this.state.urlFriend)} column="2" color="#7CFC00">OK</ButtonModal>
@@ -52,15 +52,15 @@ const customStyle = {
 }
 
 export const Modal = (Content) => (props) => {
-  return(
+  return (
     <ReactModal
       isOpen={props.visible}
+      onAfterOpen={ () => document.body.style.overflow = 'hidden' }
       onRequestClose={() => {
         document.body.style.overflow = 'auto'
-        props.closeModal('REMOVE_MODAL')
+        props.closeModal(props.type)
       }}
-      onAfterOpen={ () => document.body.style.overflow = 'hidden'}
-      contentLabel="ModalRemove"
+      contentLabel={props.type}
       style={customStyle}
     >
     <Content {...props}/>
