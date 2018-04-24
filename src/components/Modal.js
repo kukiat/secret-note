@@ -2,11 +2,12 @@ import React from 'react'
 import ReactModal from 'react-modal'
 import styled, { keyframes } from 'styled-components'
 import ReactDOM from 'react-dom'
+import { styleModal } from './StyleModal'
 
 export const RemoveBody = (props) => {
   return (
     <ModalBody>
-      <div className="modal-close" onClick={ () => props.closeModal('REMOVE_MODAL') }>X</div>
+      <div className="modal-close" onClick={ () => props.closeModal(props.type) }>X</div>
       <div className="modal-title">WARNING !!</div>
       <div className="modal-header">If you remove. This note will destroy.</div>
       <div className="modal-btn">
@@ -22,7 +23,7 @@ export class ShareBody extends React.Component {
   render() {
     return (
       <ModalBody>
-        <div className="modal-close" onClick={ () => this.props.closeModal('SHARE_MODAL') }>X</div>
+        <div className="modal-close" onClick={ () => this.props.closeModal(this.props.type) }>X</div>
         <div className="modal-title">Send note to friends</div>
         <div className="modal-header"><InputText onChange={(e) => this.setState({ urlFriend: e.target.value })} placeholder="friend url"/></div>
         <div className="modal-btn">
@@ -31,23 +32,6 @@ export class ShareBody extends React.Component {
         </div>
       </ModalBody>
     )
-  }
-}
-
-const customStyle = {
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,.75)',
-    position: 'fixed',
-    zIndex: 1000,
-  },
-  content: {
-    backgroundColor: 'rgba(0,0,0,.75)',
-    width: '350px',
-    height: '180px',
-    padding:'-20px',
-    top: '25%',
-    left: '50%',
-    transform: 'translate(-50%)'
   }
 }
 
@@ -61,7 +45,7 @@ export const Modal = (Content) => (props) => {
         props.closeModal(props.type)
       }}
       contentLabel={props.type}
-      style={customStyle}
+      style={styleModal(props.type)}
     >
     <Content {...props}/>
   </ReactModal>
