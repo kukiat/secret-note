@@ -218,6 +218,7 @@ class DashBoard extends React.Component {
         />
         <ShareModal
           type='SHARE_MODAL'
+          titles={titles.map((data) => ({ title: data.title, id: data.id, status: false }))}
           visible={ visible.share } 
           removeTitle={ this.removeTitle } 
           closeModal={ this.closeModal }

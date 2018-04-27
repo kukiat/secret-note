@@ -33,7 +33,7 @@ class App extends Component {
   }
 
   login = () => {
-    window.FB.login(this.checkCurrentStatus, {scope: 'user_photos'})
+    window.FB.login(this.checkCurrentStatus, {scope: 'user_friends'})
   }
 
   logout = () => {
