@@ -189,17 +189,12 @@ class DashBoard extends React.Component {
     const { titles, indexTitle, value, visible } = this.state
     return (
       <div className="main-dashboard" onClick ={ (e) => this.onClickOther(e) }>
-        <RemoveModal 
-          visible={ visible.remove } 
-          removeTitle={ this.removeTitle } 
-          closeModal={ this.closeModal }
-        />
         <Header FbResponse ={ this.props.FbResponse }/>
         <ContainerNote>
           <div className="btn-main">
             <Button color="rgb(107, 207, 82)" onClick={ () => this.addTitle() }>ADD</Button>
             <Button color="#F33A3A" onClick={ () => this.openModal('REMOVE_MODAL') }>REMOVE</Button>
-            {/* <Button color="#3399FF" onClick={ () => this.openModal('SHARE_MODAL') }>SHARE</Button> */}
+            <Button color="#3399FF" onClick={ () => this.openModal('SHARE_MODAL') }>SHARE</Button>
             <Button color="#F8CC52" onClick={ () => logout()} >SignOut</Button>
           </div>
           <Topic 
@@ -215,6 +210,19 @@ class DashBoard extends React.Component {
             value ={ value }
           />
         </ContainerNote>
+        <RemoveModal 
+          type='REMOVE_MODAL'
+          visible={ visible.remove } 
+          removeTitle={ this.removeTitle } 
+          closeModal={ this.closeModal }
+        />
+        <ShareModal
+          type='SHARE_MODAL'
+          titles={titles.map((data) => ({ title: data.title, id: data.id, status: false }))}
+          visible={ visible.share } 
+          removeTitle={ this.removeTitle } 
+          closeModal={ this.closeModal }
+        />
       </div>
     )
   }
@@ -240,4 +248,5 @@ const Button = styled.a`
 
 ReactDOM.render(<RemoveModal />, document.getElementById('root'))
 ReactDOM.render(<ShareModal />, document.getElementById('root'))
+
 export default DashBoard

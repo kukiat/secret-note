@@ -2,11 +2,12 @@ import React from 'react'
 import ReactModal from 'react-modal'
 import styled, { keyframes } from 'styled-components'
 import ReactDOM from 'react-dom'
+import { styleModal } from './StyleModal'
+import { CheckBox } from '../svg/checkbox'
 
 export const RemoveBody = (props) => {
   return (
     <ModalBody>
-      <div className="modal-close" onClick={ () => props.closeModal('REMOVE_MODAL') }>X</div>
       <div className="modal-title">WARNING !!</div>
       <div className="modal-header">If you remove. This note will destroy.</div>
       <div className="modal-btn">
@@ -18,50 +19,62 @@ export const RemoveBody = (props) => {
 }
 
 export class ShareBody extends React.Component {
-  state = { urlFriend: '' }
+  constructor(props) {
+    super(props)
+    this.state = { 
+      urlFriend: '',
+      titles: props.titles
+    }
+  }
+
+  handleTitleChange = (id, status) => {
+    const index = this.state.titles.findIndex((data) => data.id === id)
+    // this.setState({
+    //   titles: [...this.state.titles, {status: !status}]
+    // })
+  }
+
   render() {
+    const { titles } = this.state
+    console.log(titles)
     return (
-      <ModalBody>
-        <div className="modal-close" onClick={ () => this.props.closeModal('SHARE_MODAL') }>X</div>
-        <div className="modal-title">SHARE</div>
-        <div className="modal-header"><InputText onChange={(e) => this.setState({ urlFriend: e.target.value })} placeholder="friend url"/></div>
+      <ModalBodyShare>
+        <div className="modal-title">Send note to friends</div>
+        <div className="modal-content">
+          <div className="list-friends">xxxxx</div>
+          <div className="selected-list-frients">xxxxx</div>
+          <div className="selected-list-notes">
+            {
+              titles.map(data => (
+                <ListNote key={data.id} onClick={ () => this.handleTitleChange(data.id, data.status) }>
+                  <CheckBox/>
+                  <div>{data.title}</div>
+                </ListNote>
+              ))
+            }
+          </div>
+          {/* <InputText onChange={(e) => this.setState({ urlFriend: e.target.value })} placeholder="friend url"/> */}
+        </div>
         <div className="modal-btn">
           <ButtonModal onClick={() => this.props.shareTitle(this.state.urlFriend)} column="2" color="#7CFC00">OK</ButtonModal>
           <ButtonModal onClick={() => this.props.closeModal('SHARE_MODAL') } column="4" color="#DC143C">Cancle</ButtonModal>
         </div>
-      </ModalBody>
+      </ModalBodyShare>
     )
   }
 }
 
-const customStyle = {
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,.75)',
-    position: 'fixed',
-    zIndex: 1000,
-  },
-  content: {
-    backgroundColor: 'rgba(0,0,0,.75)',
-    width: '350px',
-    height: '180px',
-    padding:'-20px',
-    top: '25%',
-    left: '50%',
-    transform: 'translate(-50%)'
-  }
-}
-
 export const Modal = (Content) => (props) => {
-  return(
+  return (
     <ReactModal
       isOpen={props.visible}
+      onAfterOpen={ () => document.body.style.overflow = 'hidden' }
       onRequestClose={() => {
         document.body.style.overflow = 'auto'
-        props.closeModal('REMOVE_MODAL')
+        props.closeModal(props.type)
       }}
-      onAfterOpen={ () => document.body.style.overflow = 'hidden'}
-      contentLabel="ModalRemove"
-      style={customStyle}
+      contentLabel={props.type}
+      style={styleModal(props.type)}
     >
     <Content {...props}/>
   </ReactModal>
@@ -86,17 +99,6 @@ const ModalBody = styled.div`
   display: grid;
   grid-template-rows: 5% 25% 35% 30%;
   height: 100%;
-  .modal-close {
-    color: #FFFFFF;
-    grid-row: 1;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 5px 0px 0px 330px;
-    font-weight: 700;
-    &:hover {
-      color: rgb(219, 217, 217);
-    }
-  }
   .modal-title {
     text-align: center;
     grid-row: 2;
@@ -113,6 +115,54 @@ const ModalBody = styled.div`
   .modal-btn {
     grid-row: 4;
     display: grid;
+    grid-template-columns: 10% 35% 10% 35% 10%;
+  }
+`
+const ListNote = styled.div`
+  text-align: center;
+  font-size: 18px;
+  border-bottom: 1px solid #FFFFFF;
+  height: 45px;
+  background: #202020;
+  cursor: pointer;
+`
+
+const ModalBodyShare = styled.div`
+  display: grid;
+  grid-template-rows: 20% 60% 20%;
+  height: 100%;
+  .modal-title {
+    text-align: center;
+    grid-row: 1;
+    padding: 7px 0px 0px 0px;
+    color: rgb(187, 26, 26);
+    font-weight: bold;
+    border-bottom: solid 1px #FFFFFF;
+  }
+  .modal-content {
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 30% 30% 40%;
+    .list-friends {
+      grid-column: 1;
+      border-right: 1px solid #FFFFFF;
+    }
+    .selected-list-friends {
+      grid-column: 2;
+    }
+    .selected-list-notes {
+      color: #FFFFFF;
+      height: 180px;
+      overflow-y: scroll;
+      border-left: 1px solid #FFFFFF;
+      grid-column: 3;
+    }
+  }
+  .modal-btn {
+    grid-row: 3;
+    display: grid;
+    /* padding-top: 14.5px; */
+    border-top: 1px solid #FFFFFF;
     grid-template-columns: 10% 35% 10% 35% 10%;
   }
 `

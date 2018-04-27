@@ -36,7 +36,6 @@ const Topic = (props) => {
 
 const AllTopic = styled.div`
   text-align: center;
-  overflow-x: scroll;
   grid-column: 3/5;
   border-radius: 10px 0px 0px 10px;
   border-left: 2px solid #FFFFFF;
